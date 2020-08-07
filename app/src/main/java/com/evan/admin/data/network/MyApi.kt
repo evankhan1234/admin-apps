@@ -31,7 +31,6 @@ interface MyApi {
         @Field("email") email: String,
         @Field("password") password: String
     ) : Response<AuthResponse>
-
     @GET("quotes")
     suspend fun getQuotes() : Response<QuotesResponse>
 
