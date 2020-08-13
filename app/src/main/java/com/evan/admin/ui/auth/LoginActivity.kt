@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import com.evan.admin.R
 import com.evan.admin.data.db.entities.User
 import com.evan.admin.databinding.ActivityLoginBinding
+import com.evan.admin.util.MyPasswordTransformationMethod
 import com.evan.admin.util.hide
 import com.evan.admin.util.show
 import com.evan.admin.util.snackbar
@@ -42,35 +43,32 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
         val binding: ActivityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         val viewModel = ViewModelProviders.of(this, factory).get(AuthViewModel::class.java)
         binding.viewmodel = viewModel
-        et_email=findViewById(R.id.et_email)
-        et_mobile=findViewById(R.id.et_mobile)
-        radio_email=findViewById(R.id.radio_email)
-        tv_sign_in=findViewById(R.id.tv_sign_in)
-        radio_mobile=findViewById(R.id.radio_mobile)
-        radio_email?.setOnClickListener{
-            et_mobile?.visibility=View.GONE
-            et_email?.visibility=View.VISIBLE
-        }
-        radio_mobile?.setOnClickListener{
-            et_email?.visibility=View.GONE
-            et_mobile?.visibility=View.VISIBLE
-        }
+
         viewModel.authListener = this
 
-        viewModel.getLoggedInUser().observe(this, Observer { user ->
-            if(user != null){
-                Intent(this, HomeActivity::class.java).also {
-                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(it)
-                }
-            }
-        })
+        et_password?.transformationMethod = MyPasswordTransformationMethod()
+
+        show_pass?.setOnClickListener {
+            onPasswordVisibleOrInvisible()
+        }
         text_building_name =
             resources!!.getString(R.string.account) + "<font color=#DDC915> Sign up</font>"
         tv_sign_in?.text = Html.fromHtml(text_building_name)
 
     }
+    fun onPasswordVisibleOrInvisible() {
+        val cursorPosition = et_password?.selectionStart
 
+        if (et_password?.transformationMethod == null) {
+            et_password?.transformationMethod = MyPasswordTransformationMethod()
+            show_pass?.isSelected = false
+        } else {
+
+            et_password?.transformationMethod = null
+            show_pass?.isSelected = true
+        }
+        et_password?.setSelection(cursorPosition!!)
+    }
     override fun onStarted() {
         progress_bar.show()
     }
@@ -78,8 +76,8 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
     override fun onSuccess(user: User) {
         progress_bar.hide()
         Intent(this, HomeActivity::class.java).also {
-            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(it)
+            finish()
         }
 
     }

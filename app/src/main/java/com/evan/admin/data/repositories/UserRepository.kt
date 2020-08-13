@@ -1,7 +1,7 @@
 package com.evan.admin.data.repositories
 
 import com.evan.admin.data.db.AppDatabase
-import com.evan.admin.data.db.entities.User
+
 import com.evan.admin.data.network.MyApi
 import com.evan.admin.data.network.SafeApiRequest
 import com.evan.admin.data.network.post.AuthPost
@@ -20,18 +20,6 @@ class UserRepository(
     suspend fun userLoginFor(auth: AuthPost): LoginResponse {
         return apiRequest { api.userLoginFor(auth) }
     }
-    suspend fun userSignup(
-        name: String,
-        email: String,
-        password: String
-    ) : AuthResponse {
-        return apiRequest{ api.userSignup(name, email, password)}
-    }
 
-    suspend fun saveUser(user: User) =
-        db.getUserDao().upsert(user)
-
-    fun getUser() = db.getUserDao().getuser()
-    fun getUserList() = db.getUserDao().getuserList()
 
 }
