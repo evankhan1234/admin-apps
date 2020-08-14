@@ -31,10 +31,7 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
     private val factory : AuthViewModelFactory by instance()
     var text_building_name: String? = ""
     var tv_sign_in: TextView? = null
-    var et_email: EditText? = null
-    var et_mobile: EditText? = null
-    var radio_email: RadioButton? = null
-    var radio_mobile: RadioButton? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
