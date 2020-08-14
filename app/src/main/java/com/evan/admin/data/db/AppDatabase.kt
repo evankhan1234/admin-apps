@@ -5,16 +5,15 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.evan.admin.data.db.entities.Quote
-import com.evan.admin.data.db.entities.User
+
 
 
 @Database(
-    entities = [User::class, Quote::class],
+    entities = [Quote::class],
     version = 1
 )
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun getUserDao(): UserDao
     abstract fun getQuoteDao(): QuoteDao
 
     companion object {

@@ -20,7 +20,7 @@ interface MyApi {
         @Field("password") password: String
     ) : Response<AuthResponse>
 
-    @POST("login-api.php")
+    @POST("admin-login.php")
     suspend fun userLoginFor(
         @Body authPost: AuthPost
     ) : Response<LoginResponse>

@@ -12,19 +12,6 @@ class ProfileViewModel(
     private val  repository: UserRepository
 ) : ViewModel() {
 
-    fun user() = repository.getUser()
-   // fun userList() = repository.getUserList()
-    val quotes by lazyDeferred {
-        repository.getUserList()
-    }
-
-    fun saveUser(user: User){
-        Coroutines.main {
-            Log.e("sdfds","Sds"+user.created_at)
-            repository.saveUser(user)
-        }
-
-    }
 
 
 }

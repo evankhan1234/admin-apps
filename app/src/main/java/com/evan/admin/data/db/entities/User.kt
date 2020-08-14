@@ -1,20 +1,21 @@
 package com.evan.admin.data.db.entities
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-const val CURRENT_USER_ID = 0
-
-@Entity
-data class User(
-    var id: Int? = null,
-    var name: String? = null,
-    var email: String? = null,
-    var password: String? = null,
-    var email_verified_at: String? = null,
-    var created_at: String? = null,
-    var updated_at: String? = null
-){
-    @PrimaryKey(autoGenerate = false)
-    var uid: Int = CURRENT_USER_ID
-}
+@Parcelize
+class User(
+    @SerializedName("Id")
+    var Id: Int?,
+    @SerializedName("Email")
+    var Email: String?,
+    @SerializedName("Password")
+    var Password: String?,
+    @SerializedName("Name")
+    var Name: String?,
+    @SerializedName("Status")
+    var Status: Int?,
+    @SerializedName("Created")
+    var Created: String?
+):Parcelable
