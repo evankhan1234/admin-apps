@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/rlt_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true">
+
+    <androidx.core.widget.NestedScrollView
+            android:layout_above="@+id/linear"
+            android:id="@+id/scroll"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+        <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+
+                >
+
+            <LinearLayout
+                    android:id="@+id/linear_category"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <RelativeLayout
+                        android:layout_alignParentTop="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginTop="0px"
+                            android:orientation="horizontal"
+                            android:visibility="visible">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/img_icon"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:src="@drawable/order_on" />
+
+                        <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:orientation="vertical">
+
+                            <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="15dp"
+                                    android:orientation="horizontal">
+
+                                <TextView
+                                        android:id="@+id/tv_name"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="10dp"
+                                        android:maxLines="2"
+                                        android:text="MD SARAWER JAHAN EVAN"
+                                        android:textColor="#6A6B6B"
+                                        android:textSize="13sp" />
+
+                                <ImageView
+                                        android:layout_marginLeft="10dp"
+                                        android:src="@drawable/correct"
+                                        android:id="@+id/img_auth"
+                                        android:layout_width="15dp"
+                                        android:layout_height="15dp" />
+
+                            </LinearLayout>
+
+
+
+                            <TextView
+                                    android:id="@+id/tv_hour"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="11 hours ago"
+                                    android:textColor="#6A6B6B"
+                                    android:textSize="13sp" />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+                <TextView
+                        android:layout_marginTop="15dp"
+                        android:id="@+id/tv_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:textColor="#6A6B6B"
+                        android:textSize="15sp" />
+                <com.makeramen.roundedimageview.RoundedImageView
+
+                        android:id="@+id/img_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scaleType="centerCrop"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:visibility="visible"
+                        app:riv_border_color="#333333"
+                        app:riv_corner_radius="10dp"
+                        app:riv_mutate_background="true" />
+
+
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+    <LinearLayout
+            android:id="@+id/linear"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        <RadioGroup
+                android:visibility="visible"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:id="@+id/radioLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+            <RadioButton
+
+                    android:layout_marginRight="10dp"
+                    android:tag="35"
+                    android:checked="true"
+                    android:textSize="15sp"
+                    android:id="@+id/radio_approve"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Approve"
+                    />
+
+            <RadioButton
+                    android:tag="35"
+                    android:textSize="15sp"
+                    android:layout_marginLeft="30dp"
+                    android:id="@+id/radio_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Delete" />
+
+        </RadioGroup>
+        <Button
+                android:id="@+id/btn_done"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/black_capsul"
+                android:stateListAnimator="@null"
+                android:text="Done"
+                android:textColor="#fff"
+                android:textSize="15sp" />
+    </LinearLayout>
+
+    <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:indeterminateDrawable="@drawable/progress"
+            android:visibility="gone" />
+</RelativeLayout>

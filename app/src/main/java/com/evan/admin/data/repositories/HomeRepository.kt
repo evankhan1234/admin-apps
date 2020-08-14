@@ -1,0 +1,29 @@
+package com.evan.admin.data.repositories
+
+import com.evan.admin.data.db.AppDatabase
+import com.evan.admin.data.network.MyApi
+import com.evan.admin.data.network.SafeApiRequest
+import com.evan.admin.data.network.post.AuthPost
+import com.evan.admin.data.network.post.IDPost
+import com.evan.admin.data.network.post.LimitPost
+import com.evan.admin.data.network.post.LoginResponse
+import com.evan.admin.data.network.responses.AuthResponse
+import com.evan.admin.data.network.responses.BasicResponses
+import com.evan.admin.data.network.responses.PostResponses
+
+class HomeRepository (
+    private val api: MyApi
+) : SafeApiRequest() {
+
+
+    suspend fun getInActivePost(header:String,post: LimitPost): PostResponses {
+        return apiRequest { api.getInActivePost(header,post)}
+    }
+
+    suspend fun updatePost(header:String,post: IDPost): BasicResponses {
+        return apiRequest { api.updatePost(header,post)}
+    }
+    suspend fun deletePost(header:String,post: IDPost): BasicResponses {
+        return apiRequest { api.deletePost(header,post)}
+    }
+}

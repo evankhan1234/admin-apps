@@ -67,11 +67,6 @@ class AuthViewModel(
 
     }
 
-    fun onLogin(view: View){
-        Intent(view.context, LoginActivity::class.java).also {
-            view.context.startActivity(it)
-        }
-    }
 
 
 

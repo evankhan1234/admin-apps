@@ -70,7 +70,7 @@
                                 app:cardElevation="3dp">
 
                             <LinearLayout
-                                    android:id="@+id/linear_product"
+                                    android:id="@+id/linear_post"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
