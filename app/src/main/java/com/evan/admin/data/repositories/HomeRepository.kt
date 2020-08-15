@@ -10,6 +10,7 @@ import com.evan.admin.data.network.post.LoginResponse
 import com.evan.admin.data.network.responses.AuthResponse
 import com.evan.admin.data.network.responses.BasicResponses
 import com.evan.admin.data.network.responses.PostResponses
+import com.evan.admin.data.network.responses.ShopResponses
 
 class HomeRepository (
     private val api: MyApi
@@ -25,5 +26,11 @@ class HomeRepository (
     }
     suspend fun deletePost(header:String,post: IDPost): BasicResponses {
         return apiRequest { api.deletePost(header,post)}
+    }
+    suspend fun getInactiveShopList(header:String): ShopResponses {
+        return apiRequest { api.getInactiveShopList(header)}
+    }
+    suspend fun updateShop(header:String,post: IDPost): BasicResponses {
+        return apiRequest { api.updateShop(header,post)}
     }
 }

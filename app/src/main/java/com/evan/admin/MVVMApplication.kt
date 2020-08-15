@@ -9,6 +9,8 @@ import com.evan.admin.data.repositories.HomeRepository
 import com.evan.admin.data.repositories.QuotesRepository
 import com.evan.admin.data.repositories.UserRepository
 import com.evan.admin.ui.auth.AuthViewModelFactory
+import com.evan.admin.ui.home.HomeViewModel
+import com.evan.admin.ui.home.HomeViewModelFactory
 import com.evan.admin.ui.home.profile.ProfileViewModelFactory
 import com.evan.admin.ui.home.quotes.QuotesViewModelFactory
 import com.evan.admin.ui.home.store.post.PostDataSource
@@ -43,7 +45,7 @@ class MVVMApplication : Application(), KodeinAware {
         bind() from provider{ PostModelFactory(instance(), instance()) }
         bind() from provider{ PostDataSource(instance(), instance()) }
         bind() from provider{ PostSourceFactory(instance()) }
-
+        bind() from provider { HomeViewModelFactory(instance()) }
 
     }
 

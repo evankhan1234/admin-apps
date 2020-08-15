@@ -5,10 +5,7 @@ import com.evan.admin.data.network.post.AuthPost
 import com.evan.admin.data.network.post.IDPost
 import com.evan.admin.data.network.post.LimitPost
 import com.evan.admin.data.network.post.LoginResponse
-import com.evan.admin.data.network.responses.AuthResponse
-import com.evan.admin.data.network.responses.BasicResponses
-import com.evan.admin.data.network.responses.PostResponses
-import com.evan.admin.data.network.responses.QuotesResponse
+import com.evan.admin.data.network.responses.*
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -40,13 +37,20 @@ interface MyApi {
         @Header("Authorization") Authorization:String,
         @Body idPost: IDPost
     ): Response<BasicResponses>
-
+    @POST("update-in-active-status.php")
+    suspend fun  updateShop(
+        @Header("Authorization") Authorization:String,
+        @Body idPost: IDPost
+    ): Response<BasicResponses>
     @POST("delete-post.php")
     suspend fun  deletePost(
         @Header("Authorization") Authorization:String,
         @Body idPost: IDPost
     ): Response<BasicResponses>
-
+    @GET("get-inactive-shop.php")
+    suspend fun getInactiveShopList(
+        @Header("Authorization") Authorization:String
+    ): Response<ShopResponses>
     @FormUrlEncoded
     @POST("signup")
     suspend fun userSignup(

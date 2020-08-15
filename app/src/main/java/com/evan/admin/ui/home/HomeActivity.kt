@@ -10,9 +10,12 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.evan.admin.R
 import com.evan.admin.data.db.entities.Post
+import com.evan.admin.data.db.entities.Shop
 import com.evan.admin.ui.home.dashboard.DashboardFragment
 import com.evan.admin.ui.home.orders.OrdersFragment
 import com.evan.admin.ui.home.store.StoreFragment
+import com.evan.admin.ui.home.store.inactive_shop.InactiveShopFragment
+import com.evan.admin.ui.home.store.inactive_shop.InactiveShopViewFragment
 import com.evan.admin.ui.home.store.post.PostFragment
 import com.evan.admin.ui.home.store.post.PostViewFragment
 import com.evan.admin.util.*
@@ -66,6 +69,11 @@ class HomeActivity : AppCompatActivity() {
         addFragment(FRAG_INACTIVE_POST, true, null)
 
     }
+    fun goToInactiveShopFragment() {
+        setUpHeader(FRAG_INACTIVE_SHOP)
+        addFragment(FRAG_INACTIVE_SHOP, true, null)
+
+    }
     fun addFragment(fragId: Int, isHasAnimation: Boolean, obj: Any?) {
         // init fragment manager
         mFragManager = supportFragmentManager
@@ -95,6 +103,9 @@ class HomeActivity : AppCompatActivity() {
             }
             FRAG_INACTIVE_POST -> {
                 newFrag = PostFragment()
+            }
+            FRAG_INACTIVE_SHOP->{
+                newFrag = InactiveShopFragment()
             }
         }
         mCurrentFrag = newFrag
@@ -165,6 +176,52 @@ class HomeActivity : AppCompatActivity() {
         fragTransaction!!.commit()
 
     }
+
+    fun goToViewInActiveShopFragment(shop: Shop) {
+        setUpHeader(FRAG_INACTIVE_SHOP_VIEW)
+        mFragManager = supportFragmentManager
+        // create transaction
+        var fragId:Int?=0
+        fragId=FRAG_INACTIVE_SHOP_VIEW
+        fragTransaction = mFragManager?.beginTransaction()
+        //check if there is any backstack if yes then remove it
+        val count = mFragManager?.getBackStackEntryCount()
+        if (count != 0) {
+            //this will clear the back stack and displays no animation on the screen
+            // mFragManager?.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
+        // check current fragment is wanted fragment
+        if (mCurrentFrag != null && mCurrentFrag!!.getTag() != null && mCurrentFrag!!.getTag() == fragId.toString()) {
+            return
+        }
+        var newFrag: Fragment? = null
+
+        // identify which fragment will be called
+
+        newFrag = InactiveShopViewFragment()
+        val b= Bundle()
+        b.putParcelable(Shop::class.java?.getSimpleName(), shop)
+
+        newFrag.setArguments(b)
+
+        mCurrentFrag = newFrag
+
+        fragTransaction!!.setCustomAnimations(
+            R.anim.view_transition_in_left,
+            R.anim.view_transition_out_left,
+            R.anim.view_transition_in_right,
+            R.anim.view_transition_out_right
+        )
+
+        // param 1: container id, param 2: new fragment, param 3: fragment id
+
+        fragTransaction?.replace(R.id.main_container, newFrag!!, fragId.toString())
+        // prevent showed when user press back fabReview
+        fragTransaction?.addToBackStack(fragId.toString())
+        //  fragTransaction?.hide(active).show(guideFragment).commit();
+        fragTransaction!!.commit()
+
+    }
     override fun onBackPressed() {
         super.onBackPressed()
 
@@ -177,19 +234,24 @@ class HomeActivity : AppCompatActivity() {
                 setUpHeader(FRAG_STORE)
             }
 
-            if (f is DashboardFragment) {
+          else if (f is DashboardFragment) {
                 val storeFragment: DashboardFragment =
                     mFragManager?.findFragmentByTag(FRAG_TOP.toString()) as DashboardFragment
                 //  storeFragment.removeChild()
                 setUpHeader(FRAG_TOP)
             }
-            if (f is PostFragment) {
+            else  if (f is PostFragment) {
                 val storeFragment: PostFragment =
                     mFragManager?.findFragmentByTag(FRAG_INACTIVE_POST.toString()) as PostFragment
                 //  storeFragment.removeChild()
                 setUpHeader(FRAG_INACTIVE_POST)
             }
-
+            else   if (f is InactiveShopFragment) {
+                val storeFragment: InactiveShopFragment =
+                    mFragManager?.findFragmentByTag(FRAG_INACTIVE_SHOP.toString()) as InactiveShopFragment
+                //  storeFragment.removeChild()
+                setUpHeader(FRAG_INACTIVE_SHOP)
+            }
         }
 
     }
@@ -219,7 +281,20 @@ class HomeActivity : AppCompatActivity() {
                 btn_footer_store.setSelected(true)
 
             }
+            FRAG_INACTIVE_SHOP->{
+                ll_back_header?.visibility = View.VISIBLE
+                rlt_header?.visibility = View.GONE
+                tv_details.text = resources.getString(R.string.inactive_shop)
+                btn_footer_store.setSelected(true)
+            }
             FRAG_INACTIVE_POST_VIEW -> {
+                ll_back_header?.visibility = View.VISIBLE
+                rlt_header?.visibility = View.GONE
+                tv_details.text = resources.getString(R.string.details)
+                btn_footer_store.setSelected(true)
+
+            }
+            FRAG_INACTIVE_SHOP_VIEW -> {
                 ll_back_header?.visibility = View.VISIBLE
                 rlt_header?.visibility = View.GONE
                 tv_details.text = resources.getString(R.string.details)
