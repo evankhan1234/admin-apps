@@ -42,7 +42,31 @@ class HomeViewModel (
         }
 
     }
+    fun getActiveShops(token:String) {
+        shopListListener?.onStarted()
+        Coroutines.main {
+            try {
+                val authResponse = repository.getActiveShopList(token)
+                Log.e("response", "response" + Gson().toJson(authResponse))
+                if (authResponse.success!!){
+                    shopListListener?.shop(authResponse?.data!!)
+                }
+                else{
+                    shopListListener?.onFailure(authResponse.message!!)
+                }
 
+
+                shopListListener?.onEnd()
+            } catch (e: ApiException) {
+                shopListListener?.onFailure(e.message!!)
+                shopListListener?.onEnd()
+            } catch (e: NoInternetException) {
+                shopListListener?.onEnd()
+                shopListListener?.onFailure(e.message!!)
+            }
+        }
+
+    }
     fun updateShop(header:String,id:Int) {
         shopSuccessListener?.onStarted()
         Coroutines.main {
@@ -50,6 +74,32 @@ class HomeViewModel (
                 idPost= IDPost(id)
                 Log.e("createToken", "createToken" + Gson().toJson(idPost))
                 val response = repository.updateShop(header,idPost!!)
+                Log.e("createToken", "createToken" + Gson().toJson(response))
+                if (response.success!!){
+                    shopSuccessListener?.onSuccess(response?.message!!)
+                }
+                else{
+                    shopSuccessListener?.onFailure(response?.message!!)
+                }
+                shopSuccessListener?.onEnd()
+            } catch (e: ApiException) {
+                Log.e("createToken", "createToken" +e?.message)
+                shopSuccessListener?.onFailure(e?.message!!)
+                shopSuccessListener?.onEnd()
+            } catch (e: NoInternetException) {
+                shopSuccessListener?.onEnd()
+                shopSuccessListener?.onFailure(e?.message!!)
+            }
+        }
+
+    }
+    fun updateActiveShop(header:String,id:Int) {
+        shopSuccessListener?.onStarted()
+        Coroutines.main {
+            try {
+                idPost= IDPost(id)
+                Log.e("createToken", "createToken" + Gson().toJson(idPost))
+                val response = repository.updateActiveShop(header,idPost!!)
                 Log.e("createToken", "createToken" + Gson().toJson(response))
                 if (response.success!!){
                     shopSuccessListener?.onSuccess(response?.message!!)

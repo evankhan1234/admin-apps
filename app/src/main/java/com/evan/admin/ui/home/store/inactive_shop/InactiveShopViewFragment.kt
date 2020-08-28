@@ -44,6 +44,7 @@ class InactiveShopViewFragment : Fragment() , KodeinAware,IShopSuccessListener {
     var img_avatar: CircleImageView?=null
     var btn_done: Button?=null
     var token:String?=""
+    var type:String?=""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,7 +53,7 @@ class InactiveShopViewFragment : Fragment() , KodeinAware,IShopSuccessListener {
         val root= inflater.inflate(R.layout.fragment_inactive_shop_view, container, false)
         viewModel = ViewModelProviders.of(this, factory).get(HomeViewModel::class.java)
         viewModel?.shopSuccessListener=this
-        progress_bar=root.findViewById(R.id.progress_bar)
+        progress_bar=root.findViewById(R.id.progress_circular)
         tv_name=root.findViewById(R.id.tv_name)
         tv_email=root.findViewById(R.id.tv_email)
         img_avatar=root.findViewById(R.id.img_avatar)
@@ -63,20 +64,32 @@ class InactiveShopViewFragment : Fragment() , KodeinAware,IShopSuccessListener {
         tv_shop_address=root.findViewById(R.id.tv_shop_address)
         btn_done=root.findViewById(R.id.btn_done)
         token = SharedPreferenceUtil.getShared(activity!!, SharedPreferenceUtil.TYPE_AUTH_TOKEN)
-
         val args: Bundle? = arguments
         if (args != null) {
             if (args?.containsKey(Shop::class.java.getSimpleName()) != null) {
                 shop = args?.getParcelable(Shop::class.java.getSimpleName())
-
+                type=args?.getString("type")
                 Log.e("data", "data" + Gson().toJson(shop!!))
-
+                Log.e("type", "type" + type)
             }
         }
         init()
-
+        if (type!!.equals("Active")){
+            btn_done?.setText("Decline")
+        }
+        else{
+            btn_done?.setText("Approve")
+        }
         btn_done?.setOnClickListener {
-            viewModel?.updateShop(token!!,shop?.Id!!)
+
+            if (type!!.equals("Active")){
+
+               viewModel?.updateActiveShop(token!!,shop?.Id!!)
+            }
+            else{
+                viewModel?.updateShop(token!!,shop?.Id!!)
+            }
+
         }
         return root
     }

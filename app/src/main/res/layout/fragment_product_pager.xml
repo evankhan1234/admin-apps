@@ -1,0 +1,55 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:clickable="true"
+        android:focusable="true"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="1.5"
+            android:visibility="visible"
+            >
+        <FrameLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="27.4dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="6dp"
+                android:background="@color/white"
+                >
+            <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:tabGravity="center"
+                    app:tabPaddingStart="9.5dp"
+                    app:tabIndicatorFullWidth="false"
+                    app:tabPaddingEnd="9.5dp"
+                    app:tabIndicatorHeight="3dp"
+                    app:tabIndicator="@drawable/tab_indicator"
+                    app:tabMode="scrollable"
+                    app:tabSelectedTextColor="@color/black_again"
+                    app:tabTextAppearance="@style/MyTabLayoutTextAppearanceTop"
+                    app:tabTextColor="@color/black_opacity_60" />
+
+        </FrameLayout>
+        <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/tabLayout"
+                android:layout_marginBottom="0px">
+
+
+        </androidx.viewpager.widget.ViewPager>
+
+    </RelativeLayout>
+    <RelativeLayout
+            android:id="@+id/main_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+</RelativeLayout>

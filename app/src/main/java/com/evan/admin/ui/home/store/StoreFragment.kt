@@ -13,6 +13,7 @@ import com.evan.admin.ui.home.HomeActivity
 class StoreFragment : Fragment() {
     var linear_post: LinearLayout?=null
     var linear_inactive_shop: LinearLayout?=null
+    var linear_active_shop: LinearLayout?=null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -21,6 +22,7 @@ class StoreFragment : Fragment() {
         val root= inflater.inflate(R.layout.fragment_store, container, false)
         linear_post=root?.findViewById(R.id.linear_post)
         linear_inactive_shop=root?.findViewById(R.id.linear_inactive_shop)
+        linear_active_shop=root?.findViewById(R.id.linear_active_shop)
         linear_post?.setOnClickListener {
             if (activity is HomeActivity) {
                 (activity as HomeActivity).goToInactivePostFragment()
@@ -29,6 +31,11 @@ class StoreFragment : Fragment() {
         linear_inactive_shop?.setOnClickListener {
             if (activity is HomeActivity) {
                 (activity as HomeActivity).goToInactiveShopFragment()
+            }
+        }
+        linear_active_shop?.setOnClickListener {
+            if (activity is HomeActivity) {
+                (activity as HomeActivity).goToActiveShopFragment()
             }
         }
         return root;

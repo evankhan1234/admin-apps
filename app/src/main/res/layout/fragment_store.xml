@@ -161,7 +161,7 @@
                                 app:cardElevation="3dp">
 
                             <LinearLayout
-                                    android:id="@+id/linear_supplier"
+                                    android:id="@+id/linear_active_shop"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"

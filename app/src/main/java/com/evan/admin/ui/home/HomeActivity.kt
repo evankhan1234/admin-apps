@@ -14,6 +14,7 @@ import com.evan.admin.data.db.entities.Shop
 import com.evan.admin.ui.home.dashboard.DashboardFragment
 import com.evan.admin.ui.home.orders.OrdersFragment
 import com.evan.admin.ui.home.store.StoreFragment
+import com.evan.admin.ui.home.store.active_shop.ActiveShopFragment
 import com.evan.admin.ui.home.store.inactive_shop.InactiveShopFragment
 import com.evan.admin.ui.home.store.inactive_shop.InactiveShopViewFragment
 import com.evan.admin.ui.home.store.post.PostFragment
@@ -74,6 +75,11 @@ class HomeActivity : AppCompatActivity() {
         addFragment(FRAG_INACTIVE_SHOP, true, null)
 
     }
+    fun goToActiveShopFragment() {
+        setUpHeader(FRAG_ACTIVE_SHOP)
+        addFragment(FRAG_ACTIVE_SHOP, true, null)
+
+    }
     fun addFragment(fragId: Int, isHasAnimation: Boolean, obj: Any?) {
         // init fragment manager
         mFragManager = supportFragmentManager
@@ -106,6 +112,9 @@ class HomeActivity : AppCompatActivity() {
             }
             FRAG_INACTIVE_SHOP->{
                 newFrag = InactiveShopFragment()
+            }
+            FRAG_ACTIVE_SHOP->{
+                newFrag = ActiveShopFragment()
             }
         }
         mCurrentFrag = newFrag
@@ -177,7 +186,7 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
-    fun goToViewInActiveShopFragment(shop: Shop) {
+    fun goToViewInActiveShopFragment(shop: Shop,type: String) {
         setUpHeader(FRAG_INACTIVE_SHOP_VIEW)
         mFragManager = supportFragmentManager
         // create transaction
@@ -201,7 +210,7 @@ class HomeActivity : AppCompatActivity() {
         newFrag = InactiveShopViewFragment()
         val b= Bundle()
         b.putParcelable(Shop::class.java?.getSimpleName(), shop)
-
+        b.putString("type",type)
         newFrag.setArguments(b)
 
         mCurrentFrag = newFrag
@@ -285,6 +294,12 @@ class HomeActivity : AppCompatActivity() {
                 ll_back_header?.visibility = View.VISIBLE
                 rlt_header?.visibility = View.GONE
                 tv_details.text = resources.getString(R.string.inactive_shop)
+                btn_footer_store.setSelected(true)
+            }
+            FRAG_ACTIVE_SHOP->{
+                ll_back_header?.visibility = View.VISIBLE
+                rlt_header?.visibility = View.GONE
+                tv_details.text = resources.getString(R.string.active_shop)
                 btn_footer_store.setSelected(true)
             }
             FRAG_INACTIVE_POST_VIEW -> {

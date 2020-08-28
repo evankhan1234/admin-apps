@@ -33,4 +33,10 @@ class HomeRepository (
     suspend fun updateShop(header:String,post: IDPost): BasicResponses {
         return apiRequest { api.updateShop(header,post)}
     }
+    suspend fun getActiveShopList(header:String): ShopResponses {
+        return apiRequest { api.getActiveShopList(header)}
+    }
+    suspend fun updateActiveShop(header:String,post: IDPost): BasicResponses {
+        return apiRequest { api.updateActiveShop(header,post)}
+    }
 }
