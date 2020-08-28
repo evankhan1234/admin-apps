@@ -42,6 +42,12 @@ interface MyApi {
         @Header("Authorization") Authorization:String,
         @Body idPost: IDPost
     ): Response<BasicResponses>
+
+    @POST("update-active-status.php")
+    suspend fun  updateActiveShop(
+        @Header("Authorization") Authorization:String,
+        @Body idPost: IDPost
+    ): Response<BasicResponses>
     @POST("delete-post.php")
     suspend fun  deletePost(
         @Header("Authorization") Authorization:String,
@@ -49,6 +55,11 @@ interface MyApi {
     ): Response<BasicResponses>
     @GET("get-inactive-shop.php")
     suspend fun getInactiveShopList(
+        @Header("Authorization") Authorization:String
+    ): Response<ShopResponses>
+
+    @GET("get-active-shop.php")
+    suspend fun getActiveShopList(
         @Header("Authorization") Authorization:String
     ): Response<ShopResponses>
     @FormUrlEncoded
@@ -72,7 +83,7 @@ interface MyApi {
 
             return Retrofit.Builder()
                 .client(okkHttpclient)
-                .baseUrl("http://192.168.0.105/stationary/v1/")
+                .baseUrl("http://192.168.0.108/stationary/v1/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(MyApi::class.java)

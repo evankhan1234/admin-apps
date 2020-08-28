@@ -1,4 +1,4 @@
-package com.evan.admin.ui.home.store.inactive_shop
+package com.evan.admin.ui.home.store.active_shop
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,17 +15,15 @@ import com.evan.admin.data.db.entities.Shop
 import com.evan.admin.ui.home.HomeActivity
 import com.evan.admin.ui.home.HomeViewModel
 import com.evan.admin.ui.home.HomeViewModelFactory
-import com.evan.admin.ui.home.store.post.IPostUpdateListener
-import com.evan.admin.ui.home.store.post.PostAdapter
-import com.evan.admin.ui.home.store.post.PostModelFactory
-import com.evan.admin.ui.home.store.post.PostViewModel
+import com.evan.admin.ui.home.store.inactive_shop.IShopListListener
+import com.evan.admin.ui.home.store.inactive_shop.IShopUpdateListener
+import com.evan.admin.ui.home.store.inactive_shop.InactiveShopAdapter
 import com.evan.admin.util.SharedPreferenceUtil
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 
-
-class InactiveShopFragment : Fragment() , KodeinAware, IShopUpdateListener,IShopListListener {
+class ActiveShopFragment : Fragment()  , KodeinAware, IShopUpdateListener, IShopListListener {
     override val kodein by kodein()
 
     private val factory : HomeViewModelFactory by instance()
@@ -41,7 +39,7 @@ class InactiveShopFragment : Fragment() , KodeinAware, IShopUpdateListener,IShop
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val root= inflater.inflate(R.layout.fragment_inactive_shop, container, false)
+        val root= inflater.inflate(R.layout.fragment_active_shop, container, false)
         viewModel = ViewModelProviders.of(this, factory).get(HomeViewModel::class.java)
         viewModel?.shopListListener=this
         rcv_shop=root.findViewById(R.id.rcv_shop)
@@ -51,12 +49,12 @@ class InactiveShopFragment : Fragment() , KodeinAware, IShopUpdateListener,IShop
     }
     override fun onResume() {
         super.onResume()
-        viewModel.getShops(token!!)
+        viewModel.getActiveShops(token!!)
     }
 
     override fun onUpdate(shop: Shop) {
         if ( activity is HomeActivity){
-            (activity as HomeActivity).goToViewInActiveShopFragment(shop,"Inactive")
+            (activity as HomeActivity).goToViewInActiveShopFragment(shop,"Active")
         }
     }
 
@@ -80,6 +78,5 @@ class InactiveShopFragment : Fragment() , KodeinAware, IShopUpdateListener,IShop
     override fun onFailure(message: String) {
         Toast.makeText(activity!!,message, Toast.LENGTH_SHORT).show()
     }
-
 
 }

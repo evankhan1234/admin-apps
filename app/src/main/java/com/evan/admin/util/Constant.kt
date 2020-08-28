@@ -44,6 +44,7 @@ const val FRAG_MESSAGE: Int = 20
 const val FRAG_INACTIVE_POST: Int = 21
 const val FRAG_INACTIVE_POST_VIEW: Int = 22
 const val FRAG_INACTIVE_SHOP: Int = 23
+const val FRAG_ACTIVE_SHOP: Int = 25
 const val FRAG_INACTIVE_SHOP_VIEW: Int = 24
 const val FRAG_WISHLIST: Int = 3
 const val FRAG_SETTINGS: Int = 4
