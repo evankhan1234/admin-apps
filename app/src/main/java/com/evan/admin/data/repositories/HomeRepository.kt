@@ -3,14 +3,8 @@ package com.evan.admin.data.repositories
 import com.evan.admin.data.db.AppDatabase
 import com.evan.admin.data.network.MyApi
 import com.evan.admin.data.network.SafeApiRequest
-import com.evan.admin.data.network.post.AuthPost
-import com.evan.admin.data.network.post.IDPost
-import com.evan.admin.data.network.post.LimitPost
-import com.evan.admin.data.network.post.LoginResponse
-import com.evan.admin.data.network.responses.AuthResponse
-import com.evan.admin.data.network.responses.BasicResponses
-import com.evan.admin.data.network.responses.PostResponses
-import com.evan.admin.data.network.responses.ShopResponses
+import com.evan.admin.data.network.post.*
+import com.evan.admin.data.network.responses.*
 
 class HomeRepository (
     private val api: MyApi
@@ -39,4 +33,15 @@ class HomeRepository (
     suspend fun updateActiveShop(header:String,post: IDPost): BasicResponses {
         return apiRequest { api.updateActiveShop(header,post)}
     }
+
+    suspend fun getProductList(header:String,post: ProductPost): ProductListResponses {
+        return apiRequest { api.getProductList(header,post) }
+    }
+    suspend fun getProductSearchList(header:String,post: ProductSearchPost): ProductListResponses {
+        return apiRequest { api.getProductSearchList(header,post) }
+    }
+    suspend fun getShopType(): ShopTypeResponses {
+        return apiRequest { api.getShopType() }
+    }
+
 }

@@ -17,6 +17,10 @@ import com.evan.admin.ui.home.store.post.PostDataSource
 import com.evan.admin.ui.home.store.post.PostModelFactory
 import com.evan.admin.ui.home.store.post.PostSourceFactory
 import com.evan.admin.ui.home.store.post.PostViewModel
+import com.evan.admin.ui.home.store.products.ProductDataSource
+import com.evan.admin.ui.home.store.products.ProductModelFactory
+import com.evan.admin.ui.home.store.products.ProductSourceFactory
+import com.evan.admin.ui.home.store.products.ProductViewModel
 
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -42,9 +46,13 @@ class MVVMApplication : Application(), KodeinAware {
         bind() from provider { ProfileViewModelFactory(instance()) }
         bind() from provider{ QuotesViewModelFactory(instance()) }
         bind() from provider{ PostViewModel(instance(), instance()) }
+        bind() from provider{ ProductViewModel(instance(), instance()) }
         bind() from provider{ PostModelFactory(instance(), instance()) }
+        bind() from provider{ ProductModelFactory(instance(), instance()) }
         bind() from provider{ PostDataSource(instance(), instance()) }
+        bind() from provider{ ProductDataSource(instance(), instance()) }
         bind() from provider{ PostSourceFactory(instance()) }
+        bind() from provider{ ProductSourceFactory(instance()) }
         bind() from provider { HomeViewModelFactory(instance()) }
 
     }

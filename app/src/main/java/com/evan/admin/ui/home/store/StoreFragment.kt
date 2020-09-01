@@ -14,6 +14,7 @@ class StoreFragment : Fragment() {
     var linear_post: LinearLayout?=null
     var linear_inactive_shop: LinearLayout?=null
     var linear_active_shop: LinearLayout?=null
+    var linear_product: LinearLayout?=null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -23,6 +24,7 @@ class StoreFragment : Fragment() {
         linear_post=root?.findViewById(R.id.linear_post)
         linear_inactive_shop=root?.findViewById(R.id.linear_inactive_shop)
         linear_active_shop=root?.findViewById(R.id.linear_active_shop)
+        linear_product=root?.findViewById(R.id.linear_product)
         linear_post?.setOnClickListener {
             if (activity is HomeActivity) {
                 (activity as HomeActivity).goToInactivePostFragment()
@@ -36,6 +38,11 @@ class StoreFragment : Fragment() {
         linear_active_shop?.setOnClickListener {
             if (activity is HomeActivity) {
                 (activity as HomeActivity).goToActiveShopFragment()
+            }
+        }
+        linear_product?.setOnClickListener {
+            if (activity is HomeActivity) {
+                (activity as HomeActivity).goToProductFragment()
             }
         }
         return root;
