@@ -1,10 +1,7 @@
 package com.evan.admin.data.network
 
 
-import com.evan.admin.data.network.post.AuthPost
-import com.evan.admin.data.network.post.IDPost
-import com.evan.admin.data.network.post.LimitPost
-import com.evan.admin.data.network.post.LoginResponse
+import com.evan.admin.data.network.post.*
 import com.evan.admin.data.network.responses.*
 import okhttp3.OkHttpClient
 import retrofit2.Response
@@ -42,7 +39,19 @@ interface MyApi {
         @Header("Authorization") Authorization:String,
         @Body idPost: IDPost
     ): Response<BasicResponses>
-
+    @POST("system-product-pagination.php")
+    suspend fun getProductList(
+        @Header("Authorization") Authorization:String,
+        @Body systemPost: ProductPost
+    ): Response<ProductListResponses>
+    @POST("searching-system-list.php")
+    suspend fun getProductSearchList(
+        @Header("Authorization") Authorization:String,
+        @Body systemPost: ProductSearchPost
+    ): Response<ProductListResponses>
+    @GET("shop-type.php")
+    suspend fun getShopType(
+    ): Response<ShopTypeResponses>
     @POST("update-active-status.php")
     suspend fun  updateActiveShop(
         @Header("Authorization") Authorization:String,

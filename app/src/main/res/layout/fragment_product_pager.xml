@@ -15,26 +15,33 @@
         <FrameLayout
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
-                android:layout_height="27.4dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="6dp"
+                android:layout_height="32dp"
                 android:background="@color/white"
-                >
+                android:visibility="visible">
+
             <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tabs"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:tabGravity="center"
-                    app:tabPaddingStart="9.5dp"
-                    app:tabIndicatorFullWidth="false"
-                    app:tabPaddingEnd="9.5dp"
-                    app:tabIndicatorHeight="3dp"
+                    android:layout_marginLeft="5dp"
+                    app:tabIndicatorHeight="2dp"
+                    app:tabMaxWidth="0dp"
+                    app:tabIndicatorFullWidth="true"
                     app:tabIndicator="@drawable/tab_indicator"
-                    app:tabMode="scrollable"
+                    app:tabGravity="fill"
+                    app:tabMode="fixed"
                     app:tabSelectedTextColor="@color/black_again"
-                    app:tabTextAppearance="@style/MyTabLayoutTextAppearanceTop"
-                    app:tabTextColor="@color/black_opacity_60" />
+                    app:tabTextAppearance="@style/MyTabLayoutTextAppearance1"
+                    app:tabTextColor="@color/black_opacity_40" />
 
+            <View
+                    android:id="@+id/indicator"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:visibility="visible"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/background_corner" />
         </FrameLayout>
         <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPager"

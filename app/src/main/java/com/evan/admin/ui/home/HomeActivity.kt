@@ -19,6 +19,7 @@ import com.evan.admin.ui.home.store.inactive_shop.InactiveShopFragment
 import com.evan.admin.ui.home.store.inactive_shop.InactiveShopViewFragment
 import com.evan.admin.ui.home.store.post.PostFragment
 import com.evan.admin.ui.home.store.post.PostViewFragment
+import com.evan.admin.ui.home.store.products.ProductPagerFragment
 import com.evan.admin.util.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_layout.*
@@ -80,6 +81,11 @@ class HomeActivity : AppCompatActivity() {
         addFragment(FRAG_ACTIVE_SHOP, true, null)
 
     }
+    fun goToProductFragment() {
+        setUpHeader(FRAG_PRODUCT)
+        addFragment(FRAG_PRODUCT, true, null)
+
+    }
     fun addFragment(fragId: Int, isHasAnimation: Boolean, obj: Any?) {
         // init fragment manager
         mFragManager = supportFragmentManager
@@ -115,6 +121,9 @@ class HomeActivity : AppCompatActivity() {
             }
             FRAG_ACTIVE_SHOP->{
                 newFrag = ActiveShopFragment()
+            }
+            FRAG_PRODUCT->{
+                newFrag = ProductPagerFragment()
             }
         }
         mCurrentFrag = newFrag
@@ -287,6 +296,13 @@ class HomeActivity : AppCompatActivity() {
                 ll_back_header?.visibility = View.VISIBLE
                 rlt_header?.visibility = View.GONE
                 tv_details.text = resources.getString(R.string.inactive_post)
+                btn_footer_store.setSelected(true)
+
+            }
+            FRAG_PRODUCT -> {
+                ll_back_header?.visibility = View.VISIBLE
+                rlt_header?.visibility = View.GONE
+                tv_details.text = resources.getString(R.string.product)
                 btn_footer_store.setSelected(true)
 
             }

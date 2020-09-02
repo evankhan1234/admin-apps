@@ -207,7 +207,7 @@
                                 app:cardElevation="3dp">
 
                             <LinearLayout
-                                    android:id="@+id/linear_category"
+                                    android:id="@+id/linear_product"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
