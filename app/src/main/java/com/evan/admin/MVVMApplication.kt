@@ -13,6 +13,10 @@ import com.evan.admin.ui.home.HomeViewModel
 import com.evan.admin.ui.home.HomeViewModelFactory
 import com.evan.admin.ui.home.profile.ProfileViewModelFactory
 import com.evan.admin.ui.home.quotes.QuotesViewModelFactory
+import com.evan.admin.ui.home.store.customer.CustomerDataSource
+import com.evan.admin.ui.home.store.customer.CustomerModelFactory
+import com.evan.admin.ui.home.store.customer.CustomerSourceFactory
+import com.evan.admin.ui.home.store.customer.CustomerViewModel
 import com.evan.admin.ui.home.store.post.PostDataSource
 import com.evan.admin.ui.home.store.post.PostModelFactory
 import com.evan.admin.ui.home.store.post.PostSourceFactory
@@ -47,12 +51,16 @@ class MVVMApplication : Application(), KodeinAware {
         bind() from provider{ QuotesViewModelFactory(instance()) }
         bind() from provider{ PostViewModel(instance(), instance()) }
         bind() from provider{ ProductViewModel(instance(), instance()) }
+        bind() from provider{ CustomerViewModel(instance(), instance()) }
         bind() from provider{ PostModelFactory(instance(), instance()) }
         bind() from provider{ ProductModelFactory(instance(), instance()) }
+        bind() from provider{ CustomerModelFactory(instance(), instance()) }
         bind() from provider{ PostDataSource(instance(), instance()) }
         bind() from provider{ ProductDataSource(instance(), instance()) }
+        bind() from provider{ CustomerDataSource(instance(), instance()) }
         bind() from provider{ PostSourceFactory(instance()) }
         bind() from provider{ ProductSourceFactory(instance()) }
+        bind() from provider{ CustomerSourceFactory(instance()) }
         bind() from provider { HomeViewModelFactory(instance()) }
 
     }

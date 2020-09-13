@@ -7,6 +7,9 @@ import com.evan.admin.data.network.SafeApiRequest
 import com.evan.admin.data.network.post.AuthPost
 import com.evan.admin.data.network.post.LoginResponse
 import com.evan.admin.data.network.responses.AuthResponse
+import com.evan.admin.data.network.responses.ImageResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 
 class UserRepository(
@@ -21,5 +24,7 @@ class UserRepository(
         return apiRequest { api.userLoginFor(auth) }
     }
 
-
+    suspend fun createImage(part: MultipartBody.Part, body: RequestBody): ImageResponse {
+        return apiRequest { api.createProfileImage(part,body) }
+    }
 }
