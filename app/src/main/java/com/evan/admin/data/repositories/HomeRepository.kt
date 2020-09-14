@@ -43,5 +43,20 @@ class HomeRepository (
     suspend fun getShopType(): ShopTypeResponses {
         return apiRequest { api.getShopType() }
     }
+    suspend fun getUnit(): UnitResponses {
+        return apiRequest { api.getUnit() }
+    }
+    suspend fun postProduct(header:String,productPost:  SystemProductPost): BasicResponses {
+        return apiRequest { api.createProduct(header,productPost!!) }
+    }
+    suspend fun updateProduct(header:String,productPost:  SystemUpdatedProductPost): BasicResponses {
+        return apiRequest { api.updateProduct(header,productPost!!) }
+    }
+    suspend fun getCustomerList(header:String,post: LimitPost): CustomerListResponses {
+        return apiRequest { api.getCustomerList(header,post)}
+    }
 
+    suspend fun updateCustomer(header:String,post: CustomerUpdatePost): BasicResponses {
+        return apiRequest { api.updateCustomer(header,post)}
+    }
 }

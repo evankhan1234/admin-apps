@@ -19,10 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.evan.admin.R
 import com.evan.admin.data.db.entities.Product
 import com.evan.admin.ui.home.HomeActivity
-import com.evan.admin.util.NetworkState
-import com.evan.admin.util.SharedPreferenceUtil
-import com.evan.admin.util.hide
-import com.evan.admin.util.show
+import com.evan.admin.util.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
@@ -69,7 +66,7 @@ class ProductsFragment : Fragment() , KodeinAware,IProductListener,IProductViewL
 
         btn_product_new?.setOnClickListener {
             if (activity is HomeActivity) {
-              //  (activity as HomeActivity).goToCreateProductFragment()
+               (activity as HomeActivity).goToCreateProductFragment()
             }
         }
         return root;
@@ -77,7 +74,7 @@ class ProductsFragment : Fragment() , KodeinAware,IProductListener,IProductViewL
 
     override fun onUpdate(product: Product) {
         if (activity is HomeActivity) {
-           // (activity as HomeActivity).goToUpdateSystemProductFragment(system)
+          (activity as HomeActivity).goToUpdateProductFragment(product)
         }
     }
 
@@ -88,9 +85,12 @@ class ProductsFragment : Fragment() , KodeinAware,IProductListener,IProductViewL
     override fun onResume() {
         super.onResume()
         // viewModel.getCategoryType(token!!)
-        Log.e("stop","stop")
+
+        replace()
         initAdapter()
         initState()
+        Log.e("stop","stop")
+
         arguments?.let {
             val catId = it.getInt(categoryId)
             currentCategoryId = catId
