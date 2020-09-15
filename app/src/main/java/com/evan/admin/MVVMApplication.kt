@@ -11,6 +11,14 @@ import com.evan.admin.data.repositories.UserRepository
 import com.evan.admin.ui.auth.AuthViewModelFactory
 import com.evan.admin.ui.home.HomeViewModel
 import com.evan.admin.ui.home.HomeViewModelFactory
+import com.evan.admin.ui.home.newsfeed.ownpost.OwnPostDataSource
+import com.evan.admin.ui.home.newsfeed.ownpost.OwnPostModelFactory
+import com.evan.admin.ui.home.newsfeed.ownpost.OwnPostSourceFactory
+import com.evan.admin.ui.home.newsfeed.ownpost.OwnPostViewModel
+import com.evan.admin.ui.home.newsfeed.publicpost.PublicPostDataSource
+import com.evan.admin.ui.home.newsfeed.publicpost.PublicPostModelFactory
+import com.evan.admin.ui.home.newsfeed.publicpost.PublicPostSourceFactory
+import com.evan.admin.ui.home.newsfeed.publicpost.PublicPostViewModel
 import com.evan.admin.ui.home.profile.ProfileViewModelFactory
 import com.evan.admin.ui.home.quotes.QuotesViewModelFactory
 import com.evan.admin.ui.home.store.customer.CustomerDataSource
@@ -58,10 +66,18 @@ class MVVMApplication : Application(), KodeinAware {
         bind() from provider{ PostDataSource(instance(), instance()) }
         bind() from provider{ ProductDataSource(instance(), instance()) }
         bind() from provider{ CustomerDataSource(instance(), instance()) }
+        bind() from provider{ PublicPostDataSource(instance(), instance()) }
+        bind() from provider{ OwnPostDataSource(instance(), instance()) }
         bind() from provider{ PostSourceFactory(instance()) }
         bind() from provider{ ProductSourceFactory(instance()) }
         bind() from provider{ CustomerSourceFactory(instance()) }
+        bind() from provider{ PublicPostSourceFactory(instance()) }
+        bind() from provider{ OwnPostSourceFactory(instance()) }
         bind() from provider { HomeViewModelFactory(instance()) }
+        bind() from provider { OwnPostModelFactory(instance(),instance()) }
+        bind() from provider { PublicPostModelFactory(instance(),instance()) }
+        bind() from provider { PublicPostViewModel(instance(),instance()) }
+        bind() from provider { OwnPostViewModel(instance(),instance()) }
 
     }
 

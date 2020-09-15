@@ -27,6 +27,9 @@ import com.evan.admin.data.db.entities.Post
 import com.evan.admin.data.db.entities.Product
 import com.evan.admin.data.db.entities.Shop
 import com.evan.admin.ui.home.dashboard.DashboardFragment
+import com.evan.admin.ui.home.newsfeed.NewsfeedFragment
+import com.evan.admin.ui.home.newsfeed.ownpost.PostBottomsheetFragment
+import com.evan.admin.ui.home.newsfeed.publicpost.comments.CommentsFragment
 import com.evan.admin.ui.home.orders.OrdersFragment
 import com.evan.admin.ui.home.store.StoreFragment
 import com.evan.admin.ui.home.store.active_shop.ActiveShopFragment
@@ -59,6 +62,10 @@ class HomeActivity : AppCompatActivity() {
         img_header_back?.setOnClickListener {
             onBackPressed()
         }
+        btn_orders?.setOnClickListener {
+            goToNewsfeedFragment()
+
+        }
     }
     fun btn_home_clicked(view: View) {
         setUpHeader(FRAG_TOP)
@@ -67,7 +74,10 @@ class HomeActivity : AppCompatActivity() {
 
 
     }
-
+    fun goToNewsfeedFragment(){
+        setUpHeader(FRAG_NEWSFEED)
+        afterClickTabItem(FRAG_NEWSFEED, null)
+    }
 
     fun btn_store_clicked(view: View) {
         setUpHeader(FRAG_STORE)
@@ -116,6 +126,30 @@ class HomeActivity : AppCompatActivity() {
         addFragment(FRAG_CUSTOMER, true, null)
 
     }
+    fun onBottomBackPress(){
+        val f = getVisibleFragment()
+        if(f is NewsfeedFragment){
+            f.reload()
+        }
+    }
+    fun onBottomCommentsBackPress(){
+        val f = getVisibleFragmentsForComments()
+        if(f is CommentsFragment){
+            f.reload()
+        }
+    }
+    fun getVisibleFragmentsForComments(): Fragment? {
+        val fragmentManager = mFragManager
+        val fragments = fragmentManager!!.fragments
+        fragments.reverse()
+        for (fragment in fragments!!) {
+            if(fragment is CommentsFragment ){
+
+                return fragment
+            }
+        }
+        return null
+    }
     fun addFragment(fragId: Int, isHasAnimation: Boolean, obj: Any?) {
         // init fragment manager
         mFragManager = supportFragmentManager
@@ -154,6 +188,9 @@ class HomeActivity : AppCompatActivity() {
             }
             FRAG_PRODUCT->{
                 newFrag = ProductPagerFragment()
+            }
+            FRAG_NEWSFEED->{
+                newFrag = NewsfeedFragment()
             }
             FRAG_CREATE_PRODUCT->{
                 newFrag = CreateProductFragment()
@@ -437,6 +474,11 @@ class HomeActivity : AppCompatActivity() {
                 btn_footer_store.setSelected(true)
 
             }
+            FRAG_NEWSFEED->{
+                ll_back_header?.visibility = View.VISIBLE
+                rlt_header?.visibility = View.GONE
+                tv_details.text = resources.getString(R.string.newsfeed)
+            }
             FRAG_PRODUCT -> {
                 ll_back_header?.visibility = View.VISIBLE
                 rlt_header?.visibility = View.GONE
@@ -702,7 +744,18 @@ class HomeActivity : AppCompatActivity() {
             }
         }
     }
+    fun getVisibleFragments(): Fragment? {
+        val fragmentManager = mFragManager
+        val fragments = fragmentManager!!.fragments
+        fragments.reverse()
+        for (fragment in fragments!!) {
+            if(fragment is PostBottomsheetFragment ){
 
+                return fragment
+            }
+        }
+        return null
+    }
     private fun getImageFromGallery() {
         val photoPickerIntent =
             Intent(Intent.ACTION_PICK)
@@ -755,10 +808,23 @@ class HomeActivity : AppCompatActivity() {
                         } else {
                             val f = getVisibleFragment()
                             if (f != null) {
-                                if (f is CreateProductFragment) {
+                                if ( image_update.equals("profile")){
+                                    val f = getVisibleFragments()
+                                    if (f != null) {
+                                        if (f is PostBottomsheetFragment) {
 
-                                    f.showImage(updated_image_url)
+                                            f.showImage(updated_image_url)
+                                        }
+
+                                    }
                                 }
+                                else{
+                                    if (f is CreateProductFragment) {
+
+                                        f.showImage(updated_image_url)
+                                    }
+                                }
+
 
                             }
 
