@@ -35,7 +35,14 @@ interface MyApi {
         @Header("Authorization") Authorization:String,
         @Body limitPost: LimitPost
     ): Response<PostResponses>
-
+    @GET("get-delivery-last-five-sales.php")
+    suspend fun getLasFive(
+        @Header("Authorization") Authorization:String
+    ): Response<LastFiveSalesCountResponses>
+    @GET("get-delivery-order-count.php")
+    suspend fun getCustomerOrderCount(
+        @Header("Authorization") Authorization:String
+    ): Response<CustomerOrderCountResponses>
     @POST("update-in-active-post.php")
     suspend fun  updatePost(
         @Header("Authorization") Authorization:String,
@@ -133,7 +140,22 @@ interface MyApi {
         @Header("Authorization") Authorization:String,
         @Body limitPost: LimitPost
     ): Response<CustomerListResponses>
+    @POST("notice-get.php")
+    suspend fun getNotice(
+        @Header("Authorization") Authorization:String,
+        @Body noticePost: NoticePost
+    ): Response<NoticeResponses>
 
+    @POST("create-notice.php")
+    suspend fun createNotice(
+        @Header("Authorization") Authorization:String,
+        @Body noticePost: NoticeCreatePost
+    ): Response<BasicResponses>
+    @POST("update-notice.php")
+    suspend fun updateNotice(
+        @Header("Authorization") Authorization:String,
+        @Body noticePost: NoticeUpdatePost
+    ): Response<BasicResponses>
     @POST("searching-system-list.php")
     suspend fun getProductSearchList(
         @Header("Authorization") Authorization:String,
@@ -183,7 +205,10 @@ interface MyApi {
     ) : Response<AuthResponse>
     @GET("quotes")
     suspend fun getQuotes() : Response<QuotesResponse>
-
+    @GET("get-product-customer-count.php")
+    suspend fun getStoreCount(
+        @Header("Authorization") Authorization:String
+    ): Response<StoreCountResponses>
     companion object{
         operator fun invoke(
             networkConnectionInterceptor: NetworkConnectionInterceptor

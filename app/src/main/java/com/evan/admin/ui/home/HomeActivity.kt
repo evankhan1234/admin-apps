@@ -22,14 +22,12 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.evan.admin.BuildConfig
 import com.evan.admin.R
-import com.evan.admin.data.db.entities.Customer
-import com.evan.admin.data.db.entities.Post
-import com.evan.admin.data.db.entities.Product
-import com.evan.admin.data.db.entities.Shop
+import com.evan.admin.data.db.entities.*
 import com.evan.admin.ui.home.dashboard.DashboardFragment
 import com.evan.admin.ui.home.newsfeed.NewsfeedFragment
 import com.evan.admin.ui.home.newsfeed.ownpost.PostBottomsheetFragment
 import com.evan.admin.ui.home.newsfeed.publicpost.comments.CommentsFragment
+import com.evan.admin.ui.home.notice.NoticeViewFragment
 import com.evan.admin.ui.home.orders.OrdersFragment
 import com.evan.admin.ui.home.store.StoreFragment
 import com.evan.admin.ui.home.store.active_shop.ActiveShopFragment
@@ -42,6 +40,7 @@ import com.evan.admin.ui.home.store.post.PostViewFragment
 import com.evan.admin.ui.home.store.products.CreateProductFragment
 import com.evan.admin.ui.home.store.products.ProductPagerFragment
 import com.evan.admin.util.*
+import com.evan.dokan.ui.home.notice.NoticeFragment
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_layout.*
 import kotlinx.android.synthetic.main.bottom_navigation_layout.*
@@ -126,6 +125,16 @@ class HomeActivity : AppCompatActivity() {
         addFragment(FRAG_CUSTOMER, true, null)
 
     }
+    fun goToNoticeFragment() {
+        setUpHeader(FRAG_NOTICE)
+        addFragment(FRAG_NOTICE, true, null)
+
+    }
+    fun goToNoticeAddFragment() {
+        setUpHeader(FRAG_NOTICE_ADD)
+        addFragment(FRAG_NOTICE_ADD, true, null)
+
+    }
     fun onBottomBackPress(){
         val f = getVisibleFragment()
         if(f is NewsfeedFragment){
@@ -198,6 +207,12 @@ class HomeActivity : AppCompatActivity() {
             FRAG_CUSTOMER->{
                 newFrag = CustomerFragment()
             }
+            FRAG_NOTICE->{
+                newFrag = NoticeFragment()
+            }
+            FRAG_NOTICE_ADD->{
+                newFrag = NoticeViewFragment()
+            }
         }
         mCurrentFrag = newFrag
         // init argument
@@ -219,6 +234,37 @@ class HomeActivity : AppCompatActivity() {
         // prevent showed when user press back fabReview
         fragTransaction?.addToBackStack(fragId.toString())
         //  fragTransaction?.hide(active).show(guideFragment).commit();
+        fragTransaction!!.commit()
+
+    }
+    fun goToNoticeDetailsFragment(notice: Notice) {
+        setUpHeader(FRAG_NOTICE_DETAILS)
+        mFragManager = supportFragmentManager
+        var fragId:Int?=0
+        fragId= FRAG_NOTICE_DETAILS
+        fragTransaction = mFragManager?.beginTransaction()
+        val count = mFragManager?.getBackStackEntryCount()
+        if (count != 0) {
+
+        }
+        if (mCurrentFrag != null && mCurrentFrag!!.getTag() != null && mCurrentFrag!!.getTag() == fragId.toString()) {
+            return
+        }
+        var newFrag: Fragment? = null
+        newFrag = NoticeViewFragment()
+        val b= Bundle()
+        b.putParcelable(Notice::class.java?.getSimpleName(), notice)
+        newFrag.setArguments(b)
+        mCurrentFrag = newFrag
+        fragTransaction!!.setCustomAnimations(
+            R.anim.view_transition_in_left,
+            R.anim.view_transition_out_left,
+            R.anim.view_transition_in_right,
+            R.anim.view_transition_out_right
+        )
+
+        fragTransaction?.replace(R.id.main_container, newFrag!!, fragId.toString())
+        fragTransaction?.addToBackStack(fragId.toString())
         fragTransaction!!.commit()
 
     }
@@ -438,6 +484,9 @@ class HomeActivity : AppCompatActivity() {
             else   if (f is CustomerFragment) {
                 setUpHeader(FRAG_CUSTOMER)
             }
+            else   if (f is NoticeFragment) {
+                setUpHeader(FRAG_NOTICE)
+            }
         }
 
     }
@@ -464,6 +513,27 @@ class HomeActivity : AppCompatActivity() {
                 ll_back_header?.visibility = View.VISIBLE
                 rlt_header?.visibility = View.GONE
                 tv_details.text = resources.getString(R.string.inactive_post)
+                btn_footer_store.setSelected(true)
+
+            }
+            FRAG_NOTICE-> {
+                ll_back_header?.visibility = View.VISIBLE
+                rlt_header?.visibility = View.GONE
+                tv_details.text = resources.getString(R.string.notice)
+                btn_footer_store.setSelected(true)
+
+            }
+            FRAG_NOTICE_ADD-> {
+                ll_back_header?.visibility = View.VISIBLE
+                rlt_header?.visibility = View.GONE
+                tv_details.text = resources.getString(R.string.create_notice)
+                btn_footer_store.setSelected(true)
+
+            }
+            FRAG_NOTICE_DETAILS-> {
+                ll_back_header?.visibility = View.VISIBLE
+                rlt_header?.visibility = View.GONE
+                tv_details.text = resources.getString(R.string.update_notice)
                 btn_footer_store.setSelected(true)
 
             }
@@ -820,6 +890,10 @@ class HomeActivity : AppCompatActivity() {
                                 }
                                 else{
                                     if (f is CreateProductFragment) {
+
+                                        f.showImage(updated_image_url)
+                                    }
+                                    else if (f is NoticeViewFragment) {
 
                                         f.showImage(updated_image_url)
                                     }

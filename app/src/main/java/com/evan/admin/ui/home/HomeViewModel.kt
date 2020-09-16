@@ -10,6 +10,7 @@ import com.evan.admin.ui.home.newsfeed.publicpost.comments.ICommentsPostListener
 import com.evan.admin.ui.home.newsfeed.publicpost.comments.ISucceslistener
 import com.evan.admin.ui.home.newsfeed.publicpost.reply.IReplyListener
 import com.evan.admin.ui.home.newsfeed.publicpost.reply.IReplyPostListener
+import com.evan.admin.ui.home.notice.INoticeCreateListener
 import com.evan.admin.ui.home.store.inactive_shop.IShopListListener
 import com.evan.admin.ui.home.store.inactive_shop.IShopSuccessListener
 import com.evan.admin.ui.home.store.products.ICreateProductListener
@@ -34,6 +35,7 @@ class HomeViewModel (
     var replyPost:ReplyPost?=null
     var postListener: IPostListener?=null
     var commentsPostListener: ICommentsPostListener?=null
+    var noticeCreateListener: INoticeCreateListener?=null
     var commentsListener: ICommentsListener?=null
     var succeslistener: ISucceslistener?=null
     var replyListener: IReplyListener?=null
@@ -44,6 +46,8 @@ class HomeViewModel (
     var commentsForPost:CommentsForPost?=null
     var replyForPost:ReplyForPost?=null
     var commentsPost:CommentsPost?=null
+    var noticeCreatePost:NoticeCreatePost?=null
+    var noticeUpdatePost:NoticeUpdatePost?=null
     fun getShops(token:String) {
         shopListListener?.onStarted()
         Coroutines.main {
@@ -423,6 +427,49 @@ class HomeViewModel (
 
             } catch (e: NoInternetException) {
 
+            }
+        }
+
+    }
+
+    fun createNewPost(header:String,title:String,content:String,picture:String,created:String,status:Int,type:Int) {
+        commentsPostListener?.onStarted()
+        Coroutines.main {
+            try {
+                noticeCreatePost= NoticeCreatePost(title!!,content!!,picture,created!!,status!!,type!!)
+                Log.e("Search", "Search" + Gson().toJson(noticeCreatePost))
+                val response = repository.createNotice(header,noticeCreatePost!!)
+                Log.e("response", "response" + Gson().toJson(response))
+                noticeCreateListener?.onSuccess(response?.message!!)
+                noticeCreateListener?.onEnd()
+
+            } catch (e: ApiException) {
+                noticeCreateListener?.onEnd()
+                noticeCreateListener?.onFailure(e?.message!!)
+            } catch (e: NoInternetException) {
+                noticeCreateListener?.onEnd()
+                noticeCreateListener?.onFailure(e?.message!!)
+            }
+        }
+
+    }
+    fun createUpdatePost(header:String,id:Int,title:String,content:String,picture:String,created:String) {
+        commentsPostListener?.onStarted()
+        Coroutines.main {
+            try {
+                noticeUpdatePost= NoticeUpdatePost(id!!,title!!,content!!,picture,created!!)
+                Log.e("Search", "Search" + Gson().toJson(noticeUpdatePost))
+                val response = repository.updateNotice(header,noticeUpdatePost!!)
+                Log.e("response", "response" + Gson().toJson(response))
+                noticeCreateListener?.onSuccess(response?.message!!)
+                noticeCreateListener?.onEnd()
+
+            } catch (e: ApiException) {
+                noticeCreateListener?.onEnd()
+                noticeCreateListener?.onFailure(e?.message!!)
+            } catch (e: NoInternetException) {
+                noticeCreateListener?.onEnd()
+                noticeCreateListener?.onFailure(e?.message!!)
             }
         }
 

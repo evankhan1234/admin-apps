@@ -101,4 +101,13 @@ class HomeRepository (
     suspend fun getReply(header:String,post: ReplyPost): ReplyResponses {
         return apiRequest { api.getReply(header,post) }
     }
+    suspend fun getNotice(header:String,post: NoticePost): NoticeResponses {
+        return apiRequest { api.getNotice(header,post) }
+    }
+    suspend fun createNotice(header:String,post: NoticeCreatePost): BasicResponses {
+        return apiRequest { api.createNotice(header,post) }
+    }
+    suspend fun updateNotice(header:String,post: NoticeUpdatePost): BasicResponses {
+        return apiRequest { api.updateNotice(header,post) }
+    }
 }
