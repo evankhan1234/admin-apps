@@ -46,7 +46,77 @@ interface MyApi {
         @Header("Authorization") Authorization:String,
         @Body idPost: CustomerUpdatePost
     ): Response<BasicResponses>
+    @POST("post-pagination.php")
+    suspend fun  getPublicPostPagination(
+        @Header("Authorization") Authorization:String,
+        @Body publicForPost: PublicForPost
+    ): Response<PostResponses>
+    @POST("own-post-pagination.php")
+    suspend fun  getOwnPostPagination(
+        @Header("Authorization") Authorization:String,
+        @Body ownForPost: OwnForPost
+    ): Response<PostResponses>
+    @POST("comments-get.php")
+    suspend fun getComments(
+        @Header("Authorization") Authorization:String,
+        @Body post: CommentsPost
+    ): Response<CommentsResponse>
+    @POST("reply-get.php")
+    suspend fun getReply(
+        @Header("Authorization") Authorization:String,
+        @Body post: ReplyPost
+    ): Response<ReplyResponses>
+    @POST("create-comments.php")
+    suspend fun createComments(
+        @Header("Authorization") Authorization:String,
+        @Body post: CommentsForPost
+    ): Response<BasicResponses>
+    @POST("create-reply.php")
+    suspend fun createReply(
+        @Header("Authorization") Authorization:String,
+        @Body post: ReplyForPost
+    ): Response<BasicResponses>
+    @POST("update-own-post.php")
+    suspend fun updateOwnPost(
+        @Header("Authorization") Authorization:String,
+        @Body post: OwnUpdatedPost
+    ): Response<BasicResponses>
 
+    @POST("create-likes.php")
+    suspend fun createdLike(
+        @Header("Authorization") Authorization:String,
+        @Body post: CommentsPost
+    ): Response<BasicResponses>
+    @POST("deleted-like.php")
+    suspend fun deletedLike(
+        @Header("Authorization") Authorization:String,
+        @Body post: CommentsPost
+    ): Response<BasicResponses>
+    @POST("update-comments-like.php")
+    suspend fun updatedCommentsLikeCount(
+        @Header("Authorization") Authorization:String,
+        @Body post: LikeCountPost
+    ): Response<BasicResponses>
+    @POST("update-like-count.php")
+    suspend fun updatedLikeCount(
+        @Header("Authorization") Authorization:String,
+        @Body post: LikeCountPost
+    ): Response<BasicResponses>
+    @POST("create-love.php")
+    suspend fun createdLove(
+        @Header("Authorization") Authorization:String,
+        @Body post: LovePost
+    ): Response<BasicResponses>
+    @POST("deleted-love.php")
+    suspend fun deletedLove(
+        @Header("Authorization") Authorization:String,
+        @Body post: LovePost
+    ): Response<BasicResponses>
+    @POST("create-post.php")
+    suspend fun createdNewsFeedPost(
+        @Header("Authorization") Authorization:String,
+        @Body post: NewsfeedPost
+    ): Response<BasicResponses>
     @POST("update-in-active-status.php")
     suspend fun  updateShop(
         @Header("Authorization") Authorization:String,
