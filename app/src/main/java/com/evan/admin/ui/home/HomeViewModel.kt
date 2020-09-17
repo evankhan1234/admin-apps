@@ -11,6 +11,7 @@ import com.evan.admin.ui.home.newsfeed.publicpost.comments.ISucceslistener
 import com.evan.admin.ui.home.newsfeed.publicpost.reply.IReplyListener
 import com.evan.admin.ui.home.newsfeed.publicpost.reply.IReplyPostListener
 import com.evan.admin.ui.home.notice.INoticeCreateListener
+import com.evan.admin.ui.home.order.details.IOrderDetailsListener
 import com.evan.admin.ui.home.store.inactive_shop.IShopListListener
 import com.evan.admin.ui.home.store.inactive_shop.IShopSuccessListener
 import com.evan.admin.ui.home.store.products.ICreateProductListener
@@ -19,6 +20,7 @@ import com.evan.admin.ui.home.store.products.ShopTypeInterface
 import com.evan.admin.util.ApiException
 import com.evan.admin.util.Coroutines
 import com.evan.admin.util.NoInternetException
+import com.evan.dokan.ui.home.order.details.ICustomerOrderListener
 import com.google.gson.Gson
 
 class HomeViewModel (
@@ -48,6 +50,9 @@ class HomeViewModel (
     var commentsPost:CommentsPost?=null
     var noticeCreatePost:NoticeCreatePost?=null
     var noticeUpdatePost:NoticeUpdatePost?=null
+    var orderDetailsListener: IOrderDetailsListener? = null
+    var orderIdPost: OrderIdPost? = null
+    var customerOrderListener: ICustomerOrderListener? = null
     fun getShops(token:String) {
         shopListListener?.onStarted()
         Coroutines.main {
@@ -470,6 +475,50 @@ class HomeViewModel (
             } catch (e: NoInternetException) {
                 noticeCreateListener?.onEnd()
                 noticeCreateListener?.onFailure(e?.message!!)
+            }
+        }
+
+    }
+    fun getCustomerDetailsList(header: String, orderId: Int) {
+        orderDetailsListener?.onStarted()
+        Coroutines.main {
+            try {
+                orderIdPost = OrderIdPost(orderId!!)
+                Log.e("Search", "Search" + Gson().toJson(orderIdPost))
+                val response = repository.getCustomerDetailsList(header, orderIdPost!!)
+                Log.e("Search", "Search" + Gson().toJson(response))
+                orderDetailsListener?.order(response?.data!!)
+                orderDetailsListener?.onEnd()
+                Log.e("Search", "Search" + Gson().toJson(response))
+
+            } catch (e: ApiException) {
+                orderDetailsListener?.onEnd()
+            } catch (e: NoInternetException) {
+                orderDetailsListener?.onEnd()
+            }
+        }
+
+    }
+    fun getCustomerOrderInformation(header: String, orderId: Int) {
+
+        Coroutines.main {
+            try {
+                orderIdPost = OrderIdPost(orderId)
+                Log.e("Search", "Search" + Gson().toJson(orderIdPost))
+                val response = repository.getCustomerOrderInformation(header, orderIdPost!!)
+                Log.e("OrderInformation", "OrderInformation" + Gson().toJson(response))
+                if (response.data != null) {
+                    customerOrderListener?.onShow(response?.data!!)
+                } else {
+                    customerOrderListener?.onEmpty()
+                }
+                //   customerOrderListener?.onShow(response?.data!!)
+                Log.e("Search", "Search" + Gson().toJson(response))
+
+            } catch (e: ApiException) {
+
+            } catch (e: NoInternetException) {
+
             }
         }
 

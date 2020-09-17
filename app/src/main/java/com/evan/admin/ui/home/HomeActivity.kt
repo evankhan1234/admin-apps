@@ -23,12 +23,14 @@ import androidx.navigation.ui.NavigationUI
 import com.evan.admin.BuildConfig
 import com.evan.admin.R
 import com.evan.admin.data.db.entities.*
+import com.evan.admin.ui.auth.LoginActivity
 import com.evan.admin.ui.home.dashboard.DashboardFragment
 import com.evan.admin.ui.home.newsfeed.NewsfeedFragment
 import com.evan.admin.ui.home.newsfeed.ownpost.PostBottomsheetFragment
 import com.evan.admin.ui.home.newsfeed.publicpost.comments.CommentsFragment
 import com.evan.admin.ui.home.notice.NoticeViewFragment
-import com.evan.admin.ui.home.orders.OrdersFragment
+import com.evan.admin.ui.home.order.OrderFragment
+import com.evan.admin.ui.home.order.details.OrderDetailsFragment
 import com.evan.admin.ui.home.store.StoreFragment
 import com.evan.admin.ui.home.store.active_shop.ActiveShopFragment
 import com.evan.admin.ui.home.store.customer.CustomerFragment
@@ -63,6 +65,15 @@ class HomeActivity : AppCompatActivity() {
         }
         btn_orders?.setOnClickListener {
             goToNewsfeedFragment()
+
+        }
+        btn_logout?.setOnClickListener {
+            Toast.makeText(this,"Successfully Logout", Toast.LENGTH_SHORT).show()
+            SharedPreferenceUtil.saveShared(this, SharedPreferenceUtil.TYPE_AUTH_TOKEN, "")
+            SharedPreferenceUtil.saveShared(this, SharedPreferenceUtil.TYPE_FRESH, "")
+            val intent=Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+             finishs()
 
         }
     }
@@ -184,7 +195,7 @@ class HomeActivity : AppCompatActivity() {
                 newFrag = StoreFragment()
             }
             FRAG_ORDER -> {
-                newFrag = OrdersFragment()
+                newFrag = OrderFragment()
             }
             FRAG_INACTIVE_POST -> {
                 newFrag = PostFragment()
@@ -231,6 +242,53 @@ class HomeActivity : AppCompatActivity() {
         // param 1: container id, param 2: new fragment, param 3: fragment id
 
         fragTransaction?.replace(R.id.main_container, newFrag!!, fragId.toString())
+        // prevent showed when user press back fabReview
+        fragTransaction?.addToBackStack(fragId.toString())
+        //  fragTransaction?.hide(active).show(guideFragment).commit();
+        fragTransaction!!.commit()
+
+    }
+    fun goToOrderDetailsFragment(order: Order) {
+        setUpHeader(FRAG_ORDER_DETAILS)
+        mFragManager = supportFragmentManager
+        // create transaction
+        var fragId:Int?=0
+        fragId=FRAG_ORDER_DETAILS
+        fragTransaction = mFragManager?.beginTransaction()
+        //check if there is any backstack if yes then remove it
+        val count = mFragManager?.getBackStackEntryCount()
+        if (count != 0) {
+            //this will clear the back stack and displays no animation on the screen
+            // mFragManager?.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
+        // check current fragment is wanted fragment
+        if (mCurrentFrag != null && mCurrentFrag!!.getTag() != null && mCurrentFrag!!.getTag() == fragId.toString()) {
+            return
+        }
+        var newFrag: Fragment? = null
+
+        // identify which fragment will be called
+
+        newFrag = OrderDetailsFragment()
+        val b= Bundle()
+        b.putParcelable(Order::class.java?.getSimpleName(), order)
+//        var list: ArrayList<Product> = arrayListOf()
+//        b.putParcelableArrayList(Product::class.java?.getSimpleName(), list)
+
+        newFrag.setArguments(b)
+
+        mCurrentFrag = newFrag
+
+        fragTransaction!!.setCustomAnimations(
+            R.anim.view_transition_in_left,
+            R.anim.view_transition_out_left,
+            R.anim.view_transition_in_right,
+            R.anim.view_transition_out_right
+        )
+
+        // param 1: container id, param 2: new fragment, param 3: fragment id
+
+        fragTransaction?.add(R.id.main_container, newFrag!!, fragId.toString())
         // prevent showed when user press back fabReview
         fragTransaction?.addToBackStack(fragId.toString())
         //  fragTransaction?.hide(active).show(guideFragment).commit();
@@ -487,6 +545,9 @@ class HomeActivity : AppCompatActivity() {
             else   if (f is NoticeFragment) {
                 setUpHeader(FRAG_NOTICE)
             }
+            else   if (f is OrderFragment) {
+                setUpHeader(FRAG_ORDER)
+            }
         }
 
     }
@@ -514,6 +575,13 @@ class HomeActivity : AppCompatActivity() {
                 rlt_header?.visibility = View.GONE
                 tv_details.text = resources.getString(R.string.inactive_post)
                 btn_footer_store.setSelected(true)
+
+            }
+            FRAG_ORDER_DETAILS -> {
+                ll_back_header?.visibility = View.VISIBLE
+                rlt_header?.visibility = View.GONE
+                tv_details.text = resources.getString(R.string.details)
+                btn_footer_orders.setSelected(true)
 
             }
             FRAG_NOTICE-> {

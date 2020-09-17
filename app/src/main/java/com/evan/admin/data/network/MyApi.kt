@@ -209,6 +209,34 @@ interface MyApi {
     suspend fun getStoreCount(
         @Header("Authorization") Authorization:String
     ): Response<StoreCountResponses>
+
+    @POST("customer-orders-details.php")
+    suspend fun getCustomerDetailsList(
+        @Header("Authorization") Authorization:String,
+        @Body post: OrderIdPost
+    ): Response<OrderDetailsResponse>
+
+    @POST("get-customer-order-information-by-admin.php")
+    suspend fun getCustomerOrderInformation(
+        @Header("Authorization") Authorization:String,
+        @Body post: OrderIdPost
+    ): Response<CustomerOrderResponses>
+    @POST("delivered-pagination-by-admin.php")
+    suspend fun getDeliveredPagination(
+        @Header("Authorization") Authorization:String,
+        @Body post: LimitPost
+    ): Response<OrderResponses>
+
+    @POST("pending-pagination-by-admin.php")
+    suspend fun getPendingPagination(
+        @Header("Authorization") Authorization:String,
+        @Body post: LimitPost
+    ): Response<OrderResponses>
+    @POST("processing-pagination-by-admin.php")
+    suspend fun getProcessingPagination(
+        @Header("Authorization") Authorization:String,
+        @Body post: LimitPost
+    ): Response<OrderResponses>
     companion object{
         operator fun invoke(
             networkConnectionInterceptor: NetworkConnectionInterceptor

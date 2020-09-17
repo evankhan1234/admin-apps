@@ -56,7 +56,7 @@
                     app:srcCompat="@drawable/ic_box" />
 
             <ImageView
-                    android:id="@+id/btn_notice"
+                    android:id="@+id/btn_logout"
                     android:layout_width="23dp"
                     android:layout_height="22dp"
                     android:layout_marginLeft="11dp"
@@ -64,7 +64,7 @@
                     android:background="@color/transparent"
                     android:stateListAnimator="@null"
                     android:visibility="visible"
-                    app:srcCompat="@drawable/ic_bell" />
+                    app:srcCompat="@drawable/logout" />
         </LinearLayout>
 
 
