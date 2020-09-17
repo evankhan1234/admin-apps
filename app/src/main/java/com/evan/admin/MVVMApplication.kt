@@ -19,6 +19,10 @@ import com.evan.admin.ui.home.newsfeed.publicpost.PublicPostDataSource
 import com.evan.admin.ui.home.newsfeed.publicpost.PublicPostModelFactory
 import com.evan.admin.ui.home.newsfeed.publicpost.PublicPostSourceFactory
 import com.evan.admin.ui.home.newsfeed.publicpost.PublicPostViewModel
+import com.evan.admin.ui.home.notice.NoticeDataSource
+import com.evan.admin.ui.home.notice.NoticeModelFactory
+import com.evan.admin.ui.home.notice.NoticeSourceFactory
+import com.evan.admin.ui.home.notice.NoticeViewModel
 import com.evan.admin.ui.home.profile.ProfileViewModelFactory
 import com.evan.admin.ui.home.quotes.QuotesViewModelFactory
 import com.evan.admin.ui.home.store.customer.CustomerDataSource
@@ -78,6 +82,10 @@ class MVVMApplication : Application(), KodeinAware {
         bind() from provider { PublicPostModelFactory(instance(),instance()) }
         bind() from provider { PublicPostViewModel(instance(),instance()) }
         bind() from provider { OwnPostViewModel(instance(),instance()) }
+        bind() from provider { NoticeViewModel(instance(),instance()) }
+        bind() from provider { NoticeDataSource(instance(),instance()) }
+        bind() from provider { NoticeModelFactory(instance(),instance()) }
+        bind() from provider { NoticeSourceFactory(instance()) }
 
     }
 

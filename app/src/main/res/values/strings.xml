@@ -15,6 +15,9 @@
     <string name="details">Details</string>
     <string name="product">Product</string>
     <string name="customer">Customer</string>
+    <string name="notice">Notice</string>
+    <string name="update_notice">Update Notice</string>
+    <string name="create_notice">Create Notice</string>
     <string name="create_product">Create Product</string>
     <string name="update_product">Update Product</string>
     <string name="inactive_post">Inactive Posts</string>

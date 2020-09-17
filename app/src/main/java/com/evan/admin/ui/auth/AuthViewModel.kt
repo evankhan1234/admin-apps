@@ -6,6 +6,9 @@ import android.view.View
 import androidx.lifecycle.ViewModel
 import com.evan.admin.data.network.post.AuthPost
 import com.evan.admin.data.repositories.UserRepository
+import com.evan.admin.ui.auth.interfaces.ICustomerOrderCountListener
+import com.evan.admin.ui.auth.interfaces.ILastFiveSalesListener
+import com.evan.admin.ui.auth.interfaces.IStoreCountListener
 import com.evan.admin.ui.home.Listener
 import com.evan.admin.util.ApiException
 import com.evan.admin.util.Coroutines
@@ -25,10 +28,11 @@ class AuthViewModel(
     var email: String? = null
     var password: String? = null
     var passwordconfirm: String? = null
-
+    var customerOrderCountListener: ICustomerOrderCountListener?=null
+    var lastFiveSalesListener: ILastFiveSalesListener?=null
     var authListener: AuthListener? = null
     var AddListener: Listener? = null
-
+    var storeCountListener: IStoreCountListener?=null
     fun onLoginButtonClick(view: View) {
         authListener?.onStarted()
         if ( email.isNullOrEmpty()) {
@@ -103,7 +107,55 @@ class AuthViewModel(
 
     }
 
+    fun getLasFive(header:String) {
 
+        Coroutines.main {
+            try {
 
+                val response = repository.getLasFive(header)
+                Log.e("Search", "Search" + Gson().toJson(response))
+                lastFiveSalesListener?.onLast(response.data!!)
+
+            } catch (e: ApiException) {
+
+            } catch (e: NoInternetException) {
+
+            }
+        }
+
+    }
+    fun getCustomerOrderCount(header:String) {
+
+        Coroutines.main {
+            try {
+
+                val response = repository.getCustomerOrderCount(header)
+                Log.e("Search", "Search" + Gson().toJson(response))
+                customerOrderCountListener?.onCount(response.data!!)
+
+            } catch (e: ApiException) {
+
+            } catch (e: NoInternetException) {
+
+            }
+        }
+
+    }
+    fun getStoreCount(header:String) {
+
+        Coroutines.main {
+            try {
+                val response = repository.getStoreCount(header)
+                Log.e("Search", "Search" + Gson().toJson(response))
+                storeCountListener?.onStore(response.data!!)
+
+            } catch (e: ApiException) {
+
+            } catch (e: NoInternetException) {
+
+            }
+        }
+
+    }
 
 }
