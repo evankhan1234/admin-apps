@@ -30,4 +30,7 @@
     <string name="public_post">Public</string>
     <string name="own_post">My Posts</string>
     <string name="newsfeed">Newsfeed</string>
+    <string name="pending">Pending</string>
+    <string name="processing">Processing</string>
+    <string name="delivered">Delivered</string>
 </resources>

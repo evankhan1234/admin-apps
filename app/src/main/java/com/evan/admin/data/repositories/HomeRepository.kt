@@ -110,4 +110,19 @@ class HomeRepository (
     suspend fun updateNotice(header:String,post: NoticeUpdatePost): BasicResponses {
         return apiRequest { api.updateNotice(header,post) }
     }
+    suspend fun getCustomerDetailsList(header:String,post: OrderIdPost): OrderDetailsResponse {
+        return apiRequest { api.getCustomerDetailsList(header,post) }
+    }
+    suspend fun getCustomerOrderInformation(header:String,post: OrderIdPost): CustomerOrderResponses {
+        return apiRequest { api.getCustomerOrderInformation(header,post) }
+    }
+    suspend fun getDeliveredPagination(header:String,post: LimitPost): OrderResponses {
+        return apiRequest { api.getDeliveredPagination(header,post) }
+    }
+    suspend fun getPendingPagination(header:String,post: LimitPost): OrderResponses {
+        return apiRequest { api.getPendingPagination(header,post) }
+    }
+    suspend fun getProcessingPagination(header:String,post: LimitPost): OrderResponses {
+        return apiRequest { api.getProcessingPagination(header,post) }
+    }
 }

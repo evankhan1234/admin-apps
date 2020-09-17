@@ -23,6 +23,15 @@ import com.evan.admin.ui.home.notice.NoticeDataSource
 import com.evan.admin.ui.home.notice.NoticeModelFactory
 import com.evan.admin.ui.home.notice.NoticeSourceFactory
 import com.evan.admin.ui.home.notice.NoticeViewModel
+import com.evan.admin.ui.home.order.modelfactory.DeliveredOrderModelFactory
+import com.evan.admin.ui.home.order.modelfactory.PendingOrderModelFactory
+import com.evan.admin.ui.home.order.modelfactory.ProcessingOrderModelFactory
+import com.evan.admin.ui.home.order.source.DeliveredDataSource
+import com.evan.admin.ui.home.order.source.PendingOrderDataSource
+import com.evan.admin.ui.home.order.source.ProcessingDataSource
+import com.evan.admin.ui.home.order.sourcefactory.DeliveredOrderSourceFactory
+import com.evan.admin.ui.home.order.sourcefactory.PendingOrderSourceFactory
+import com.evan.admin.ui.home.order.sourcefactory.ProcessingOrderSourceFactory
 import com.evan.admin.ui.home.profile.ProfileViewModelFactory
 import com.evan.admin.ui.home.quotes.QuotesViewModelFactory
 import com.evan.admin.ui.home.store.customer.CustomerDataSource
@@ -86,6 +95,17 @@ class MVVMApplication : Application(), KodeinAware {
         bind() from provider { NoticeDataSource(instance(),instance()) }
         bind() from provider { NoticeModelFactory(instance(),instance()) }
         bind() from provider { NoticeSourceFactory(instance()) }
+        bind() from provider { DeliveredOrderSourceFactory(instance()) }
+        bind() from provider { PendingOrderSourceFactory(instance()) }
+        bind() from provider { ProcessingOrderSourceFactory(instance()) }
+
+        bind() from provider { DeliveredOrderModelFactory(instance(),instance()) }
+        bind() from provider { PendingOrderModelFactory(instance(),instance()) }
+        bind() from provider { ProcessingOrderModelFactory(instance(),instance()) }
+
+        bind() from provider { DeliveredDataSource(instance(),instance()) }
+        bind() from provider { PendingOrderDataSource(instance(),instance()) }
+        bind() from provider { ProcessingDataSource(instance(),instance()) }
 
     }
 
