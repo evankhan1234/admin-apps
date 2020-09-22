@@ -53,6 +53,7 @@ class NoticeFragment : Fragment(),KodeinAware, INoticeUpdateListener {
         viewModel = ViewModelProviders.of(this, factory).get(NoticeViewModel::class.java)
         rcv_notice=root?.findViewById(R.id.rcv_notice)
         btn_notice_new=root?.findViewById(R.id.btn_notice_new)
+        progress_bar=root?.findViewById(R.id.progress_bar)
 
         btn_notice_new?.setOnClickListener {
             (activity as HomeActivity).goToNoticeAddFragment()

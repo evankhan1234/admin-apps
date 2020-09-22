@@ -4,6 +4,7 @@ import android.app.Application
 import com.evan.admin.data.db.AppDatabase
 import com.evan.admin.data.network.MyApi
 import com.evan.admin.data.network.NetworkConnectionInterceptor
+import com.evan.admin.data.network.PushApi
 import com.evan.admin.data.preferences.PreferenceProvider
 import com.evan.admin.data.repositories.HomeRepository
 import com.evan.admin.data.repositories.QuotesRepository
@@ -62,10 +63,11 @@ class MVVMApplication : Application(), KodeinAware {
 
         bind() from singleton { NetworkConnectionInterceptor(instance()) }
         bind() from singleton { MyApi(instance()) }
+        bind() from singleton { PushApi(instance()) }
         bind() from singleton { AppDatabase(instance()) }
         bind() from singleton { PreferenceProvider(instance()) }
         bind() from singleton { UserRepository(instance(), instance()) }
-        bind() from singleton { HomeRepository(instance()) }
+        bind() from singleton { HomeRepository(instance(), instance()) }
         bind() from singleton { QuotesRepository(instance(), instance(), instance()) }
         bind() from provider { AuthViewModelFactory(instance()) }
         bind() from provider { ProfileViewModelFactory(instance()) }
