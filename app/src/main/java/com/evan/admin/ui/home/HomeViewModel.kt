@@ -10,6 +10,7 @@ import com.evan.admin.ui.home.newsfeed.publicpost.comments.ICommentsPostListener
 import com.evan.admin.ui.home.newsfeed.publicpost.comments.ISucceslistener
 import com.evan.admin.ui.home.newsfeed.publicpost.reply.IReplyListener
 import com.evan.admin.ui.home.newsfeed.publicpost.reply.IReplyPostListener
+import com.evan.admin.ui.home.notice.IFirebaseTokenListener
 import com.evan.admin.ui.home.notice.INoticeCreateListener
 import com.evan.admin.ui.home.order.details.IOrderDetailsListener
 import com.evan.admin.ui.home.store.inactive_shop.IShopListListener
@@ -32,6 +33,7 @@ class HomeViewModel (
     var shopListListener: IShopListListener?=null
     var shopSuccessListener: IShopSuccessListener?=null
     var unitListener: IUnitListener?=null
+    var firebaseTokenListener: IFirebaseTokenListener?=null
     var shopTypeListener: ShopTypeInterface? = null
     var createProductListener: ICreateProductListener?=null
     var replyPost:ReplyPost?=null
@@ -53,6 +55,7 @@ class HomeViewModel (
     var orderDetailsListener: IOrderDetailsListener? = null
     var orderIdPost: OrderIdPost? = null
     var customerOrderListener: ICustomerOrderListener? = null
+
     fun getShops(token:String) {
         shopListListener?.onStarted()
         Coroutines.main {
@@ -517,6 +520,35 @@ class HomeViewModel (
 
             } catch (e: ApiException) {
 
+            } catch (e: NoInternetException) {
+
+            }
+        }
+
+    }
+    fun getToken() {
+        Coroutines.main {
+            try {
+                val authResponse = repository.getFirebaseToken()
+                firebaseTokenListener?.unit(authResponse?.data!!)
+                Log.e("response", "response" + Gson().toJson(authResponse))
+
+            } catch (e: ApiException) {
+
+            } catch (e: NoInternetException) {
+
+            }
+        }
+
+    }
+    fun sendPush(header:String,pushPost: PushPost) {
+        Coroutines.main {
+            try {
+                Log.e("response", "response" + Gson().toJson(pushPost))
+                val response = repository.sendPush(header,pushPost!!)
+                Log.e("response", "response" + Gson().toJson(response))
+            } catch (e: ApiException) {
+                Log.e("response", "response" + e?.message)
             } catch (e: NoInternetException) {
 
             }

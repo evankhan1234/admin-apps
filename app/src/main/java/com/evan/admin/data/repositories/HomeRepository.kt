@@ -2,12 +2,14 @@ package com.evan.admin.data.repositories
 
 import com.evan.admin.data.db.AppDatabase
 import com.evan.admin.data.network.MyApi
+import com.evan.admin.data.network.PushApi
 import com.evan.admin.data.network.SafeApiRequest
 import com.evan.admin.data.network.post.*
 import com.evan.admin.data.network.responses.*
 
 class HomeRepository (
-    private val api: MyApi
+    private val api: MyApi,
+    private val push_api: PushApi
 ) : SafeApiRequest() {
 
 
@@ -124,5 +126,11 @@ class HomeRepository (
     }
     suspend fun getProcessingPagination(header:String,post: LimitPost): OrderResponses {
         return apiRequest { api.getProcessingPagination(header,post) }
+    }
+    suspend fun getFirebaseToken(): TokenResponses {
+        return apiRequest { api.getToken() }
+    }
+    suspend fun sendPush(header:String, post: PushPost): PushResponses {
+        return apiRequest { push_api.sendPush(header,post) }
     }
 }

@@ -12,7 +12,10 @@ import androidx.appcompat.widget.AppCompatImageButton
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.evan.admin.R
+import com.evan.admin.data.db.entities.FirebaseToken
 import com.evan.admin.data.db.entities.Notice
+import com.evan.admin.data.network.post.Push
+import com.evan.admin.data.network.post.PushPost
 import com.evan.admin.ui.home.HomeActivity
 import com.evan.admin.ui.home.HomeViewModel
 import com.evan.admin.ui.home.HomeViewModelFactory
@@ -30,7 +33,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class NoticeViewFragment : Fragment(), KodeinAware, INoticeCreateListener {
+class NoticeViewFragment : Fragment(), KodeinAware, INoticeCreateListener,IFirebaseTokenListener {
     override val kodein by kodein()
 
     private val factory : HomeViewModelFactory by instance()
@@ -45,6 +48,9 @@ class NoticeViewFragment : Fragment(), KodeinAware, INoticeCreateListener {
     var img_user_add: AppCompatImageButton?=null
     var progress_bar: ProgressBar?=null
     var token:String?=""
+    var tokenList: MutableList<FirebaseToken>?=null
+    var pushPost: PushPost?=null
+    var push: Push?=null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,6 +59,7 @@ class NoticeViewFragment : Fragment(), KodeinAware, INoticeCreateListener {
         val root= inflater.inflate(R.layout.fragment_notice_view, container, false)
         viewModel = ViewModelProviders.of(this, factory).get(HomeViewModel::class.java)
         viewModel?.noticeCreateListener=this
+        viewModel?.firebaseTokenListener=this
         img_notice=root?.findViewById(R.id.img_notice)
         tv_title=root?.findViewById(R.id.tv_title)
         tv_content=root?.findViewById(R.id.tv_content)
@@ -102,6 +109,7 @@ class NoticeViewFragment : Fragment(), KodeinAware, INoticeCreateListener {
             }
         }
 
+        viewModel?.getToken()
         return root
     }
     fun showImage(temp: String?) {
@@ -130,7 +138,15 @@ class NoticeViewFragment : Fragment(), KodeinAware, INoticeCreateListener {
 
     override fun onSuccess(message: String) {
         Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
+        progress_bar?.show()
+        for (i in tokenList!!.indices) {
+            push= Push("Notice",tv_title?.text.toString())
+            pushPost= PushPost(tokenList?.get(i)?.Token,push)
+            viewModel.sendPush("key=AAAAdCyJ2hw:APA91bGF6x20oQnuC2ZeAXsJju-OCAZ67dBpQvaLx7h18HSAnhl9CPWupCJaV0552qJvm1qIHL_LAZoOvv5oWA9Iraar_XQkWe3JEUmJ1v7iKq09QYyPB3ZGMeSinzC-GlKwpaJU_IvO",pushPost!!)
+        }
+
         if (activity is HomeActivity) {
+            progress_bar?.hide()
             (activity as HomeActivity).onBackPressed()
         }
     }
@@ -139,7 +155,9 @@ class NoticeViewFragment : Fragment(), KodeinAware, INoticeCreateListener {
         Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
     }
 
-
+    override fun unit(shop: MutableList<FirebaseToken>?) {
+        tokenList=shop
+    }
 
 
 }
