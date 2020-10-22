@@ -24,7 +24,7 @@ class PublicPostDataSource (val context: Context, val alertRepository: HomeRepos
 
             try {
                 networkState.postValue(NetworkState.LOADING)
-                post = PublicForPost(10, 1,1)
+                post = PublicForPost(10, 1,3)
                 val response = alertRepository.getPublicPostPagination(SharedPreferenceUtil.getShared(context, SharedPreferenceUtil.TYPE_AUTH_TOKEN)!!,post!!)
                 Log.e("response","response"+response)
                 response.success.let { isSuccessful ->
@@ -55,7 +55,7 @@ class PublicPostDataSource (val context: Context, val alertRepository: HomeRepos
         Coroutines.main {
             try {
                 networkState.postValue(NetworkState.LOADING)
-                post = PublicForPost(10, params.key,1)
+                post = PublicForPost(10, params.key,3)
                 val response =
                     alertRepository.getPublicPostPagination(SharedPreferenceUtil.getShared(context, SharedPreferenceUtil.TYPE_AUTH_TOKEN)!!,post!!)
                 response.success.let { isSuccessful ->
