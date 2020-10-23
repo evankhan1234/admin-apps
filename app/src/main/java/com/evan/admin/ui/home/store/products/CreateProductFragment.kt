@@ -112,19 +112,11 @@ class CreateProductFragment : Fragment(), KodeinAware, IUnitListener, ShopTypeIn
                     .into(img_background_mypage!!)
 
                 Log.e("data", "data" + Gson().toJson(product))
-                Handler(Looper.getMainLooper()).postDelayed({
-                    /* Create an Intent that will start the Menu-Activity. */
-                    for (i in unit!!.indices) {
-                        if (unit!!.get(i).Id!!.equals(product?.UnitId)) {
-                            spinner_unit?.setSelection(i)
-                        }
-                    }
-                    for (i in shopType!!.indices) {
-                        if (shopType!!.get(i).Id!!.equals(product?.ShopType)) {
-                            spinner_shop_type?.setSelection(i)
-                        }
-                    }
-                }, 500)
+//                Handler(Looper.getMainLooper()).postDelayed({
+//                    /* Create an Intent that will start the Menu-Activity. */
+//
+//
+//                }, 1000)
             }
         }
 
@@ -289,6 +281,11 @@ class CreateProductFragment : Fragment(), KodeinAware, IUnitListener, ShopTypeIn
                         id: Long
                     ) {
                         id_unit = shop.get(position).Id
+                        for (i in unit!!.indices) {
+                            if (unit!!.get(i).Id!!.equals(product?.UnitId)) {
+                                spinner_unit?.setSelection(i)
+                            }
+                        }
                         Log.e("shop", "shop" + shop.get(position).Id)
                     }
 
@@ -324,6 +321,11 @@ class CreateProductFragment : Fragment(), KodeinAware, IUnitListener, ShopTypeIn
                         id: Long
                     ) {
                         shopTypeId = shop.get(position).Id
+                        for (i in shopType!!.indices) {
+                            if (shopType!!.get(i).Id!!.equals(product?.ShopType)) {
+                                spinner_shop_type?.setSelection(i)
+                            }
+                        }
                         Log.e("shop", "shop" + shop.get(position).Id)
                     }
 
@@ -344,10 +346,10 @@ class CreateProductFragment : Fragment(), KodeinAware, IUnitListener, ShopTypeIn
 //            .into(img_background_mypage!!)
 //        img_user_add?.visibility=View.INVISIBLE
 
-        image_address = "http://192.168.0.110/" + temp
+        image_address = "http://199.192.28.11/" + temp
         Log.e("for", "Image" + temp)
         Glide.with(this)
-            .load("http://192.168.0.110/" + temp)
+            .load("http://199.192.28.11/" + temp)
             .into(img_background_mypage!!)
         img_user_add?.visibility = View.INVISIBLE
     }
@@ -360,6 +362,7 @@ class CreateProductFragment : Fragment(), KodeinAware, IUnitListener, ShopTypeIn
     }
 
     override fun failure(value: String) {
+        Log.e("failure","failure"+value)
         Toast.makeText(activity, value, Toast.LENGTH_LONG).show()
     }
 

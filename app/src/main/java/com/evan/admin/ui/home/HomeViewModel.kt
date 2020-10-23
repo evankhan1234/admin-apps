@@ -205,6 +205,7 @@ class HomeViewModel (
                 createProductListener?.failure(e?.message!!)
             } catch (e: NoInternetException) {
                 createProductListener?.end()
+                createProductListener?.failure(e?.message!!)
             }
         }
 
